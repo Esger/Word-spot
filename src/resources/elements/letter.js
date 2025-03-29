@@ -8,7 +8,7 @@ export class Letter {
 		this._eventAggregator = eventAggregator;
 	}
 
-	toggleSelected(eventAggregator) {
+	toggleSelected() {
 		this.model.selected = !this.model.selected;
 		this._eventAggregator.publish('letter-selected', this.model);
 	}

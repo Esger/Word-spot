@@ -1,6 +1,12 @@
 letter {
+	position  : absolute;
+	left      : 0;
+	top       : 0;
+	--distance: calc(80vmin / var(--size));
+	translate : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
+
 	button {
-		width           : 100%;
+		width           : calc(var(--distance) * .8);
 		aspect-ratio    : 1;
 		display         : flex;
 		justify-content : center;

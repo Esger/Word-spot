@@ -1,9 +1,7 @@
 board {
-	display              : grid;
-	grid-template-columns: repeat(var(--size), 1fr);
-	grid-template-rows   : repeat(var(--size), 1fr);
-	gap                  : 2vmin;
-	width                : 80vmin;
-	aspect-ratio         : 1;
-	margin               : auto;
+	position    : relative;
+	display     : block;
+	width       : 80vmin;
+	aspect-ratio: 1;
+	margin      : auto;
 }
