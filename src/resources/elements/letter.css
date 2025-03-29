@@ -1,16 +1,22 @@
 letter {
 	button {
-		width          : 100%;
-		aspect-ratio   : 1;
-		display        : flex;
-		justify-content: center;
-		align-items    : center;
-		border-radius  : .7vmin;
-		font-size      : 4vmin;
-		cursor         : pointer;
+		width           : 100%;
+		aspect-ratio    : 1;
+		display         : flex;
+		justify-content : center;
+		align-items     : center;
+		border-radius   : .7vmin;
+		font-size       : 4vmin;
+		cursor          : pointer;
+		background-color: whitesmoke;
 
 		&:hover {
 			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5);
+		}
+
+		&.selected {
+			background-color: gray;
+			color           : greenyellow;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 <template>
 	<require from="./letter.css"></require>
-	<button>${value}</button>
+	<button click.delegate="toggleSelected()"
+		class="${model.selected ? 'selected' : ''}">${model.letter}</button>
 </template>
