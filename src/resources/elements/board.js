@@ -11,18 +11,30 @@ export class Board {
 		this._eventAggregator = eventAggregator;
 		this.fillPool();
 		this.fillLetters();
-		this._wordStartSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
-			if (this._wordStarted) return;
+		this._startWordStartSubscription();
+		this._highlightSurroundingLettersSubscription = this._eventAggregator.subscribe('show-surrounding-letters',
+			letter => this.surroundingLetters(letter)
+		)
+	}
 
-			this._wordStarted = true;
-			this.surroundingLetters(letter);
+	_startWordStartSubscription() {
+		this._wordStartSubscription = this._eventAggregator.subscribeOnce('letter-clicked', letter => {
+			if (this._wordStarted) {
+				this._wordStarted = false;
+				letter.wordStart = false;
+			} else {
+				this._wordStarted = true;
+				letter.wordStart = true;
+				this.surroundingLetters(letter);
+			}
 		});
 	}
 
 	surroundingLetters(centreLetter) {
+		this.letters.forEach(letter => letter.adjacent = false);
 		const surroundingLetters = this.letters.filter(letter => {
 			const isSelf = letter.id === centreLetter.id;
-			return !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
+			return !letter.wordStart && !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
 		});
 		surroundingLetters.forEach(letter => letter.adjacent = true);
 		console.log(surroundingLetters);

@@ -8,6 +8,10 @@ export class Letter {
 		this._eventAggregator = eventAggregator;
 	}
 
+	showSurroundingLetters() {
+		this.model.adjacent && this._eventAggregator.publish('show-surrounding-letters', this.model);
+	}
+
 	toggleSelected() {
 		this._eventAggregator.publish('letter-clicked', this.model);
 	}

@@ -27,6 +27,10 @@ letter {
 
 		&.adjacent {
 			background-color: lightgray;
+
+			&:hover {
+				background-color: palegreen;
+			}
 		}
 	}
 }
