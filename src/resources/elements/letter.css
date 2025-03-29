@@ -1,0 +1,11 @@
+letter {
+	button {
+		width          : 100%;
+		aspect-ratio   : 1;
+		display        : flex;
+		justify-content: center;
+		align-items    : center;
+		border-radius  : .7vmin;
+		font-size      : 4vmin;
+	}
+}

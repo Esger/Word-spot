@@ -3,9 +3,17 @@ html {
 	body,
 	& {
 		height     : 100dvh;
-		display    : grid;
 		overflow   : hidden;
 		font-size  : 1.4rem;
 		font-family: monospace;
+		position   : relative;
+	}
+
+	h1 {
+		margin     : 3vmin auto;
+		width      : 80vmin;
+		font-weight: bold;
+		font-family: fantasy, cursive;
+		font-size  : 4vmin;
 	}
 }

@@ -1,3 +1,6 @@
-<template>
+<template style="--size: ${size}">
 	<require from="./board.css"></require>
+	<require from="elements/letter"></require>
+	<letter repeat.for="letter of letters"
+			value="${letter.letter}"></letter>
 </template>
