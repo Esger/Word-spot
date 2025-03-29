@@ -7,5 +7,10 @@ letter {
 		align-items    : center;
 		border-radius  : .7vmin;
 		font-size      : 4vmin;
+		cursor         : pointer;
+
+		&:hover {
+			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5);
+		}
 	}
 }

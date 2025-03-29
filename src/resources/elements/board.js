@@ -32,14 +32,28 @@ export class Board {
 	letterPool = [];
 
 	constructor() {
+		this.fillPool();
+		this.fillLetters();
+	}
+
+	fillPool() {
+		this.letterPool = [];
 		this.alphabet.forEach(letter => {
 			for (let i = 0; i < letter.frequency; i++) {
 				this.letterPool.push({ letter: letter.letter });
 			}
 		});
-		for (let i = 0; i < this.size * this.size; i++) {
-			const letter = this.letterPool[Math.floor(Math.random() * this.letterPool.length)];
-			this.letters.push(letter);
+	}
+
+	fillLetters() {
+		this.letters = [];
+		for (let y = 0; y < this.size; y++) {
+			for (let x = 0; x < this.size; x++) {
+				const letter = this.letterPool[Math.floor(Math.random() * this.letterPool.length)];
+				letter.x = x;
+				letter.y = y;
+				this.letters.push(letter);
+			}
 		}
 	}
 }
