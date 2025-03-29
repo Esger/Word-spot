@@ -9,7 +9,6 @@ export class Letter {
 	}
 
 	toggleSelected() {
-		this.model.selected = !this.model.selected;
-		this._eventAggregator.publish('letter-selected', this.model);
+		this._eventAggregator.publish('letter-clicked', this.model);
 	}
 }

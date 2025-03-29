@@ -11,12 +11,23 @@ export class Board {
 		this._eventAggregator = eventAggregator;
 		this.fillPool();
 		this.fillLetters();
-		this._wordStartSubscription = this._eventAggregator.subscribe('letter-selected', () => this.surroundingLetters());
+		this._wordStartSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
+			if (this._wordStarted) return;
+
+			this._wordStarted = true;
+			this.surroundingLetters(letter);
+		});
 	}
 
-	surroundingLetters() {
-		console.log('yo');
+	surroundingLetters(centreLetter) {
+		const surroundingLetters = this.letters.filter(letter => {
+			const isSelf = letter.id === centreLetter.id;
+			return !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
+		});
+		surroundingLetters.forEach(letter => letter.adjacent = true);
+		console.log(surroundingLetters);
 	}
+
 	fillPool() {
 		const alphabet = [
 			{ "letter": "E", "frequency": 18.91 },
@@ -61,6 +72,7 @@ export class Board {
 				const letter = this.letterPool[Math.floor(Math.random() * this.letterPool.length)];
 				letter.x = x;
 				letter.y = y;
+				letter.id = this.letters.length;
 				this.letters.push(structuredClone(letter));
 			}
 		}

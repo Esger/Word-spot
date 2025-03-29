@@ -24,5 +24,9 @@ letter {
 			background-color: gray;
 			color           : greenyellow;
 		}
+
+		&.adjacent {
+			background-color: lightgray;
+		}
 	}
 }
