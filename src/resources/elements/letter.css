@@ -4,6 +4,12 @@ letter {
 	top       : 0;
 	--distance: calc(80vmin / var(--size));
 	translate : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
+	transition: translate .5s ease-in;
+
+	&.entering {
+		transition: none;
+		opacity   : 0;
+	}
 
 	button {
 		width           : calc(var(--distance) * .8);
@@ -35,6 +41,13 @@ letter {
 
 		&.inWord {
 			background-color: lightgreen;
+		}
+
+		&.removed {
+			background-color: plum;
+			transform-origin: bottom;
+			transition      : transform .5s ease-in;
+			transform       : scale(1, 0);
 		}
 	}
 }

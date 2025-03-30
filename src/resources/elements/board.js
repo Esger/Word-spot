@@ -23,10 +23,8 @@ export class Board {
 
 	_addLetter(letter) {
 		if (this._word.includes(letter)) {
-			if (this._word[this._word.length - 2] === letter) {
-				const out = this._word.pop();
-				out.inWord = false;
-			}
+			const removeFromWord = this._word.splice(this._word.indexOf(letter) + 1);
+			removeFromWord.forEach(l => l.inWord = false);
 		} else {
 			letter.inWord = true;
 			this._word.push(letter);
@@ -42,47 +40,38 @@ export class Board {
 		});
 	}
 
+	_addHoverSubscription() {
+		this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
+			if (!this._firstLetter)
+				return;
+			this._addLetter(letter);
+			this._surroundingLetters(letter);
+		});
+	}
+
 	_addLetterClickedSubscription() {
 		this._letterClickedSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
 
 			if (!this._firstLetter) {
-				this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
-					if (!this._firstLetter)
-						return;
-					this._addLetter(letter);
-					this._surroundingLetters(letter)
-				});
+				this._addHoverSubscription()
 				this._firstLetter = letter;
 				letter.wordStart = true;
 				this._word = [];
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
 			} else {
-				if (this._word.includes(letter)) {
-					const isFirstLetter = this._word.indexOf(letter) === 0;
-					if (isFirstLetter) {
-						this._firstLetter = null;
-						this._resetStates();
-						this._word.pop();
+				this._checkWord().then(resolve => {
+					if (resolve) {
+						console.log('win: ', this._word);
+						this._win();
 					} else {
-						const isLastLetter = this._word.indexOf(letter) === this._word.length - 1;
-						if (isLastLetter) {
-							this._lastLetter = letter;
-							this._checkWord().then(resolve => {
-								if (resolve) {
-									console.log('win: ', this._word);
-									this._win();
-								} else {
-									console.log('loose: ', this._word);
-									this._word.pop();
-									this._resetStates();
-								}
-							});
-						}
+						console.log('loose: ', this._word);
+						this._wrong();
 					}
-				} else {
-					this._lastLetter = letter;
-				}
+					this._resetStates();
+					this._firstLetter = null;
+					this._hoverSubscription?.dispose();
+				});
 			}
 		});
 	}
@@ -96,25 +85,40 @@ export class Board {
 		});
 	}
 
-	_win() {
-		const word = this._word.map(letter => letter.letter).join('');
-		this.letters.forEach(letter => {
-			letter.adjacent = false;
+	_removeWordFromBoard() {
+		this._word.forEach(letter => {
+			const $letter = $('#letter-' + letter.id);
+			$letter.one('transitionend', _ => {
+				letter.entering = true;
+				letter.y = -1;
+				setTimeout(_ => {
+					letter.letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)].letter;
+					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
+					letter.removed = false;
+					letter.entering = false;
+				});
+			});
+			letter.removed = true;
 			letter.inWord = false;
-			letter.wordStart = false;
-			letter.selected = false;
+			const lettersAbove = this.letters.filter(l => l.y < letter.y && l.x === letter.x);
+			lettersAbove.forEach(l => l.y++);
 		});
-		this._firstLetter = null;
-		this._hoverSubscription?.dispose();
+	}
+
+	_win() {
+		this._removeWordFromBoard();
+		const word = this._word.map(letter => letter.letter).join('');
+	}
+
+	_wrong() {
+		const word = this._word.map(letter => letter.letter).join('');
 	}
 
 	_surroundingLetters(centreLetter) {
-		// if (!this._firstLetter) 
-		// 	return;
 		this.letters.forEach(letter => letter.adjacent = false);
 		const surroundingLetters = this.letters.filter(letter => {
 			const isSelf = letter.id === centreLetter.id;
-			return !letter.wordStart && !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
+			return !letter.inWord && !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
 		});
 		surroundingLetters.forEach(letter => letter.adjacent = true);
 	}
