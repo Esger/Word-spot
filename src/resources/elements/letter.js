@@ -9,7 +9,7 @@ export class Letter {
 	}
 
 	showSurroundingLetters() {
-		this.model.adjacent && this._eventAggregator.publish('show-surrounding-letters', this.model);
+		this.model.adjacent && this._eventAggregator.publish('letter-hovered', this.model);
 	}
 
 	toggleSelected() {

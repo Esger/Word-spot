@@ -32,5 +32,9 @@ letter {
 				background-color: palegreen;
 			}
 		}
+
+		&.inWord {
+			background-color: lightgreen;
+		}
 	}
 }

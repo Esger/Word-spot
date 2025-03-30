@@ -5,39 +5,78 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 export class Board {
 	size = 7;
 	letters = [];
-	letterPool = [];
+	_letterPool = [];
+	_word = [];
+
 
 	constructor(eventAggregator) {
 		this._eventAggregator = eventAggregator;
 		this.fillPool();
 		this.fillLetters();
-		this._startWordStartSubscription();
-		this._highlightSurroundingLettersSubscription = this._eventAggregator.subscribe('show-surrounding-letters',
-			letter => this.surroundingLetters(letter)
-		)
+		this._letterClickedSubscription();
+		this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
+			this._addLetter(letter);
+			this._surroundingLetters(letter)
+		});
 	}
 
-	_startWordStartSubscription() {
-		this._wordStartSubscription = this._eventAggregator.subscribeOnce('letter-clicked', letter => {
-			if (this._wordStarted) {
-				this._wordStarted = false;
-				letter.wordStart = false;
-			} else {
-				this._wordStarted = true;
+	detached() {
+		this._letterClickedSubscription?.dispose();
+		this._hoverSubscription.dispose();
+	}
+
+	_addLetter(letter) {
+		if (this._word.includes(letter)) {
+			if (this._word[this._word.length - 2] === letter) {
+				const out = this._word.pop();
+				out.inWord = false;
+			}
+		} else {
+			letter.inWord = true;
+			this._word.push(letter);
+		}
+		console.log(...this._word);
+	}
+
+	_letterClickedSubscription() {
+		this._letterClickedSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
+			if (this._word.includes(letter)) {
+				const isLastLetter = this._word.indexOf(letter) === this._word.length - 1;
+				if (isLastLetter) {
+					console.log('klaar: ', this._word);
+					this._lastLetter = letter;
+				}
+				const isFirstLetter = this._word.indexOf(letter) === 0;
+				if (isFirstLetter) {
+					this._firstLetter = null;
+				}
+				this.letters.forEach(letter => letter.adjacent = false);
+				return;
+			}
+
+			if (!this._firstLetter) {
+				this._firstLetter = letter;
 				letter.wordStart = true;
-				this.surroundingLetters(letter);
+				this._word = [];
+				this._addLetter(letter);
+				this._surroundingLetters(letter);
+			} else {
+				this._lastLetter = letter;
+				this._firstLetter.wordStart = false;
+				this._firstLetter = null;
 			}
 		});
 	}
 
-	surroundingLetters(centreLetter) {
+	_surroundingLetters(centreLetter) {
+		// if (!this._firstLetter) 
+		// 	return;
 		this.letters.forEach(letter => letter.adjacent = false);
 		const surroundingLetters = this.letters.filter(letter => {
 			const isSelf = letter.id === centreLetter.id;
 			return !letter.wordStart && !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
 		});
 		surroundingLetters.forEach(letter => letter.adjacent = true);
-		console.log(surroundingLetters);
 	}
 
 	fillPool() {
@@ -69,10 +108,10 @@ export class Board {
 			{ "letter": "Y", "frequency": 0.04 },
 			{ "letter": "Q", "frequency": 0.01 }
 		];
-		this.letterPool = [];
+		this._letterPool = [];
 		alphabet.forEach(letter => {
 			for (let i = 0; i < letter.frequency; i++) {
-				this.letterPool.push({ letter: letter.letter });
+				this._letterPool.push({ letter: letter.letter });
 			}
 		});
 	}
@@ -81,7 +120,7 @@ export class Board {
 		this.letters = [];
 		for (let y = 0; y < this.size; y++) {
 			for (let x = 0; x < this.size; x++) {
-				const letter = this.letterPool[Math.floor(Math.random() * this.letterPool.length)];
+				const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
 				letter.x = x;
 				letter.y = y;
 				letter.id = this.letters.length;
