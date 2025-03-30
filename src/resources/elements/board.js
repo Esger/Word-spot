@@ -85,7 +85,15 @@ export class Board {
 		});
 	}
 
+	_removeWordFromBoard() {
+		this._word.forEach(letter => {
+			letter.removed = true;
+			letter.inWord = false;
+		});
+	}
+
 	_win() {
+		this._removeWordFromBoard();
 		const word = this._word.map(letter => letter.letter).join('');
 	}
 

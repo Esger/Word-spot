@@ -36,5 +36,11 @@ letter {
 		&.inWord {
 			background-color: lightgreen;
 		}
+
+		&.removed {
+			background-color: plum;
+			transition      : transform .5s ease-in-out;
+			transform       : scale(0);
+		}
 	}
 }
