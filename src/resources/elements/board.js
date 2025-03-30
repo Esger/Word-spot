@@ -87,8 +87,21 @@ export class Board {
 
 	_removeWordFromBoard() {
 		this._word.forEach(letter => {
+			const $letter = $('#letter-' + letter.id);
+			$letter.one('transitionend', _ => {
+				letter.entering = true;
+				letter.y = -1;
+				setTimeout(_ => {
+					letter.letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)].letter;
+					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
+					letter.removed = false;
+					letter.entering = false;
+				});
+			});
 			letter.removed = true;
 			letter.inWord = false;
+			const lettersAbove = this.letters.filter(l => l.y < letter.y && l.x === letter.x);
+			lettersAbove.forEach(l => l.y++);
 		});
 	}
 
