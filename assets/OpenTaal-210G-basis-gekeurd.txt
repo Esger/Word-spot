@@ -131,7 +131,6 @@ Aziatisch
 Azoren
 Azteek
 Azteken
-B
 BA
 BOB
 BOG
@@ -817,7 +816,6 @@ Luxemburg
 Luxemburger
 Luxemburgs
 Luxemburgse
-M
 MA
 ME
 MKZ
@@ -1446,7 +1444,6 @@ Zwolle
 Zwollenaar
 Zwols
 Zwolse
-a
 aagje
 aagt
 aagtappel
@@ -20000,7 +19997,6 @@ bètavak
 bètaversie
 bètawetenschap
 bühne
-c
 caban
 cabaret
 cabaretavond
@@ -24013,7 +24009,6 @@ cytologisch
 cytoplasma
 cytosine
 cytostatica
-d
 daad
 daadkracht
 daadkrachtig
@@ -30070,7 +30065,6 @@ déchéance
 dégénéré
 délégué
 déléguée
-e
 eb
 ebbe
 ebben
@@ -32932,7 +32926,6 @@ ezelsvel
 ezelsveulen
 ezelswagen
 ezelwagen
-f
 fa
 faal
 faalangst
@@ -35555,7 +35548,6 @@ fytotherapie
 fêteren
 föhn
 föhnen
-g
 gaaf
 gaafheid
 gaai
@@ -42098,7 +42090,6 @@ gyroscopisch
 gênant
 gêne
 götterdämmerung
-h
 ha
 haaf
 haag
@@ -47494,7 +47485,6 @@ hèhè
 hé
 hôtelier
 hüttenkäse
-i
 ia
 iatrogeen
 iatrosofie
@@ -50631,7 +50621,6 @@ ivoorzwart
 ivoren
 izabel
 izabelkleurig
-j
 ja
 jaaglijn
 jaagpaard
@@ -51684,7 +51673,6 @@ juwelierswinkel
 juwelierszaak
 juwelig
 juxtapositie
-k
 kW
 kWh
 ka
@@ -59857,7 +59845,6 @@ kynologie
 kynologisch
 kynoloog
 kür
-l
 la
 laadbak
 laadboom
@@ -64509,8 +64496,6 @@ lyrisme
 lysine
 lysol
 löss
-m
-m/s
 ma
 maag
 maagaandoening
@@ -70675,7 +70660,6 @@ mytylschool
 myxomatose
 mêlee
 mêleren
-n
 na
 naad
 naadloos
@@ -72948,14 +72932,12 @@ nuttigheid
 nuttigheidsdenken
 nuttigheidsoverweging
 nuttiging
-nv
 nylon
 nylonkous
 nylonweefsel
 nymfomaan
 nymfomane
 nymfomanie
-o
 oase
 oasis
 obduceren
@@ -80551,8 +80533,6 @@ ozonlucht
 ozonsfeer
 ozonwater
 oöliet
-p
-pH
 pa
 paadje
 paaien
@@ -88097,7 +88077,6 @@ pyrronisme
 pyrrusoverwinning
 pythisch
 python
-q
 qat
 qua
 quad
@@ -88190,7 +88169,6 @@ quotiënt
 quotum
 quotumregeling
 quotums
-r
 ra
 raad
 raadadviseur
@@ -93548,7 +93526,6 @@ röntgenstraling
 röntgentherapie
 rösti
 rücksichtslos
-s
 sa
 saai
 saaien
@@ -105953,7 +105930,6 @@ systematisch
 systematiseren
 systematisering
 sèvres
-t
 taai
 taaie
 taaien
@@ -112442,12 +112418,9 @@ typologisch
 typoscript
 tyrannosaurus
 tzatziki
-u
 ub
 ud
 ufo
-ugli
-uhd
 ui
 uienbed
 uienbrood
@@ -113989,7 +113962,6 @@ uwer
 uwerzijds
 uzelf
 uzi
-v
 va
 vaag
 vaagheid
@@ -123759,7 +123731,6 @@ vuurzee
 vuurzuil
 vwo
 vzw
-w
 waadbaar
 waadpoot
 waadvogel
@@ -128604,7 +128575,6 @@ wurm
 wurmen
 wyandotte
 wybertje
-x
 xanthine
 xanthofyl
 xanthoom
@@ -128632,7 +128602,6 @@ xylofonist
 xylofoon
 xylografie
 xyloliet
-y
 yahtzee
 yaleslot
 yam
@@ -128666,7 +128635,6 @@ yuppenstel
 yuppie
 yuppieachtig
 yuppies
-z
 zaad
 zaadbakje
 zaadbal
