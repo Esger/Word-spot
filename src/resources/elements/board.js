@@ -3,7 +3,8 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { WordlistService } from 'services/word-list-service';
 @inject(EventAggregator, WordlistService)
 export class Board {
-	size = 5;
+	@bindable wordCount = 0;
+	size = 3;
 	letters = [];
 	_letterPool = [];
 	_word = [];
@@ -19,6 +20,12 @@ export class Board {
 	detached() {
 		this._letterClickedSubscription?.dispose();
 		this._hoverSubscription.dispose();
+	}
+
+	wordCountChanged() {
+		const oldSize = this.size;
+		this.size = Math.min(Math.floor(this.wordCount / 10) + 3, 10);
+		(oldSize !== this.size) && this.fillLetters();
 	}
 
 	_addLetter(letter) {

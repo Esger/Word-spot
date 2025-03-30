@@ -21,7 +21,11 @@ export class WordlistService {
 	async loadWordlist(filename) {
 		const response = await fetch(filename);
 		const text = await response.text();
-		return new Set(text.split('\n').map(word => word.trim().toLowerCase()));
+		return new Set(text.split('\n').map(word => this._normalizeAccents(word.trim().toLowerCase())));
+	}
+
+	_normalizeAccents(word) {
+		return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	}
 
 	valid(word) {
