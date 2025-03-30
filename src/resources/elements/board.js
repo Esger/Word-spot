@@ -8,16 +8,11 @@ export class Board {
 	_letterPool = [];
 	_word = [];
 
-
 	constructor(eventAggregator) {
 		this._eventAggregator = eventAggregator;
 		this.fillPool();
 		this.fillLetters();
-		this._letterClickedSubscription();
-		this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
-			this._addLetter(letter);
-			this._surroundingLetters(letter)
-		});
+		this._addLetterClickedSubscription();
 	}
 
 	detached() {
@@ -35,37 +30,79 @@ export class Board {
 			letter.inWord = true;
 			this._word.push(letter);
 		}
-		console.log(...this._word);
 	}
 
-	_letterClickedSubscription() {
+	_resetStates() {
+		this.letters.forEach(letter => {
+			letter.adjacent = false;
+			letter.inWord = false;
+			letter.wordStart = null;
+			letter.selected = false;
+		});
+	}
+
+	_addLetterClickedSubscription() {
 		this._letterClickedSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
-			if (this._word.includes(letter)) {
-				const isLastLetter = this._word.indexOf(letter) === this._word.length - 1;
-				if (isLastLetter) {
-					console.log('klaar: ', this._word);
-					this._lastLetter = letter;
-				}
-				const isFirstLetter = this._word.indexOf(letter) === 0;
-				if (isFirstLetter) {
-					this._firstLetter = null;
-				}
-				this.letters.forEach(letter => letter.adjacent = false);
-				return;
-			}
 
 			if (!this._firstLetter) {
+				this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
+					if (!this._firstLetter)
+						return;
+					this._addLetter(letter);
+					this._surroundingLetters(letter)
+				});
 				this._firstLetter = letter;
 				letter.wordStart = true;
 				this._word = [];
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
 			} else {
-				this._lastLetter = letter;
-				this._firstLetter.wordStart = false;
-				this._firstLetter = null;
+				if (this._word.includes(letter)) {
+					const isFirstLetter = this._word.indexOf(letter) === 0;
+					if (isFirstLetter) {
+						this._firstLetter = null;
+						this._resetStates();
+						this._word.pop();
+					} else {
+						const isLastLetter = this._word.indexOf(letter) === this._word.length - 1;
+						if (isLastLetter) {
+							this._lastLetter = letter;
+							this._checkWord().then(_ => {
+								console.log('win: ', this._word);
+								this._win();
+							}).catch(_ => {
+								console.log('loose: ', this._word);
+								this._word.pop();
+							});
+						}
+					}
+					this._resetStates();
+				} else {
+					this._lastLetter = letter;
+				}
 			}
 		});
+	}
+
+	_checkWord() {
+		return new Promise((resolve, reject) => {
+			if (this._word.length < 3) {
+				reject();
+			}
+			resolve();
+		});
+	}
+
+	_win() {
+		const word = this._word.map(letter => letter.letter).join('');
+		this.letters.forEach(letter => {
+			letter.adjacent = false;
+			letter.inWord = false;
+			letter.wordStart = false;
+			letter.selected = false;
+		});
+		this._firstLetter = null;
+		this._hoverSubscription?.dispose();
 	}
 
 	_surroundingLetters(centreLetter) {

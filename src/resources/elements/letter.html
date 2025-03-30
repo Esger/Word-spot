@@ -2,8 +2,10 @@
 	--y: ${model.y}">
 	<require from="./letter.css"></require>
 	<button click.delegate="toggleSelected()"
-		mouseover.delegate="showSurroundingLetters(model)"
-		class="${model.selected ? 'selected' : ''}
+			mouseover.delegate="showSurroundingLetters(model)"
+			class="${model.selected ? 'selected' : ''}
 				${model.adjacent ? 'adjacent' : ''}
-				${model.inWord ? 'inWord' : ''}">${model.letter}</button>
+				${model.inWord ? 'inWord' : ''}">
+		${model.letter}
+	</button>
 </template>
