@@ -1,4 +1,11 @@
-<template>
+<template style="--x: ${model.x}; 
+	--y: ${model.y}">
 	<require from="./letter.css"></require>
-	<button>${value}</button>
+	<button click.delegate="toggleSelected()"
+			mouseover.delegate="showSurroundingLetters(model)"
+			class="${model.selected ? 'selected' : ''}
+				${model.adjacent ? 'adjacent' : ''}
+				${model.inWord ? 'inWord' : ''}">
+		${model.letter}
+	</button>
 </template>

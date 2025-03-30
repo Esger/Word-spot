@@ -1,11 +1,40 @@
 letter {
+	position  : absolute;
+	left      : 0;
+	top       : 0;
+	--distance: calc(80vmin / var(--size));
+	translate : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
+
 	button {
-		width          : 100%;
-		aspect-ratio   : 1;
-		display        : flex;
-		justify-content: center;
-		align-items    : center;
-		border-radius  : .7vmin;
-		font-size      : 4vmin;
+		width           : calc(var(--distance) * .8);
+		aspect-ratio    : 1;
+		display         : flex;
+		justify-content : center;
+		align-items     : center;
+		border-radius   : .7vmin;
+		font-size       : 4vmin;
+		cursor          : pointer;
+		background-color: whitesmoke;
+
+		&:hover {
+			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5);
+		}
+
+		&.selected {
+			background-color: gray;
+			color           : greenyellow;
+		}
+
+		&.adjacent {
+			background-color: lightgray;
+
+			&:hover {
+				background-color: palegreen;
+			}
+		}
+
+		&.inWord {
+			background-color: lightgreen;
+		}
 	}
 }

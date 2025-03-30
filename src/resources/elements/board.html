@@ -2,5 +2,6 @@
 	<require from="./board.css"></require>
 	<require from="elements/letter"></require>
 	<letter repeat.for="letter of letters"
+			model.bind="letter"
 			value="${letter.letter}"></letter>
 </template>
