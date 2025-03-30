@@ -1,5 +1,6 @@
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { resolve } from 'promise-polyfill';
 
 @inject(EventAggregator)
 export class Board {
@@ -67,16 +68,18 @@ export class Board {
 						const isLastLetter = this._word.indexOf(letter) === this._word.length - 1;
 						if (isLastLetter) {
 							this._lastLetter = letter;
-							this._checkWord().then(_ => {
-								console.log('win: ', this._word);
-								this._win();
-							}).catch(_ => {
-								console.log('loose: ', this._word);
-								this._word.pop();
+							this._checkWord().then(resolve => {
+								if (resolve) {
+									console.log('win: ', this._word);
+									this._win();
+								} else {
+									console.log('loose: ', this._word);
+									this._word.pop();
+									this._resetStates();
+								}
 							});
 						}
 					}
-					this._resetStates();
 				} else {
 					this._lastLetter = letter;
 				}
@@ -86,10 +89,10 @@ export class Board {
 
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			if (this._word.length < 3) {
-				reject();
-			}
-			resolve();
+			if (this._word.length < 3)
+				resolve(false);
+			else
+				resolve(true);
 		});
 	}
 
