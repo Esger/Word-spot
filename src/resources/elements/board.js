@@ -1,16 +1,16 @@
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { resolve } from 'promise-polyfill';
-
-@inject(EventAggregator)
+import { WordlistService } from 'services/word-list-service';
+@inject(EventAggregator, WordlistService)
 export class Board {
 	size = 7;
 	letters = [];
 	_letterPool = [];
 	_word = [];
 
-	constructor(eventAggregator) {
+	constructor(eventAggregator, wordlistService) {
 		this._eventAggregator = eventAggregator;
+		this._wordlistService = wordlistService;
 		this.fillPool();
 		this.fillLetters();
 		this._addLetterClickedSubscription();
@@ -78,10 +78,9 @@ export class Board {
 
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			if (this._word.length < 3)
-				resolve(false);
-			else
-				resolve(true);
+			const word = this._word.map(letter => letter.letter).join('');
+			const wordIsValid = this._wordlistService.valid(word);
+			resolve(wordIsValid);
 		});
 	}
 
@@ -107,7 +106,6 @@ export class Board {
 
 	_win() {
 		this._removeWordFromBoard();
-		const word = this._word.map(letter => letter.letter).join('');
 	}
 
 	_wrong() {
