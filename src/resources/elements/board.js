@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { WordlistService } from 'services/word-list-service';
 @inject(EventAggregator, WordlistService)
 export class Board {
-	size = 7;
+	size = 5;
 	letters = [];
 	_letterPool = [];
 	_word = [];
@@ -46,6 +46,7 @@ export class Board {
 				return;
 			this._addLetter(letter);
 			this._surroundingLetters(letter);
+			this._eventAggregator.publish('current-word', this._getText(this._word));
 		});
 	}
 
@@ -62,11 +63,12 @@ export class Board {
 			} else {
 				this._checkWord().then(resolve => {
 					if (resolve) {
-						console.log('win: ', this._word);
 						this._win();
+						this._eventAggregator.publish('word-submitted', '');
 					} else {
 						console.log('loose: ', this._word);
 						this._wrong();
+						this._eventAggregator.publish('current-word', '');
 					}
 					this._resetStates();
 					this._firstLetter = null;
@@ -76,9 +78,13 @@ export class Board {
 		});
 	}
 
+	_getText(word) {
+		return word.map(letter => letter.letter).join('');
+	}
+
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			const word = this._word.map(letter => letter.letter).join('');
+			const word = this._getText(this._word);
 			const wordIsValid = this._wordlistService.valid(word);
 			resolve(wordIsValid);
 		});
