@@ -1,0 +1,71 @@
+word-highlight {
+	.beam {
+		position        : absolute;
+		background-image: linear-gradient(transparent, lightgreen, transparent);
+		opacity         : 0.9;
+		width           : var(--distance);
+		height          : calc(var(--distance) / 5);
+		translate       : calc(.8 * var(--distance) / 2) calc(.61 * var(--distance) / 2);
+		transform-origin: left;
+	}
+}
+
+.au-stagger {
+	animation-delay: 100ms;
+}
+
+.animate-fadeIn {
+	&.au-enter {
+		opacity: 0;
+		scale  : .1;
+	}
+
+	&.au-enter-active {
+		animation: fadeIn .15s ease-out;
+	}
+
+	&.au-entered {
+		opacity: 1;
+		scale  : 1;
+	}
+}
+
+.animate-fadeOut {
+	&.au-leave {
+		opacity: 1;
+		scale  : 1;
+	}
+
+	&.au-leave-active {
+		animation: fadeOut .05s ease-in;
+	}
+
+	&.au-left {
+		opacity: 0;
+		scale  : .1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		scale  : .1;
+	}
+
+	to {
+		opacity: 1;
+		scale  : 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+		scale  : 1;
+	}
+
+	to {
+		opacity: 0;
+		scale  : .1;
+	}
+}

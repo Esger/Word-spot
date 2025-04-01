@@ -7,7 +7,7 @@ export class Board {
 	size = 3;
 	letters = [];
 	_letterPool = [];
-	_word = [];
+	word = [];
 
 	constructor(eventAggregator, wordlistService) {
 		this._eventAggregator = eventAggregator;
@@ -29,12 +29,12 @@ export class Board {
 	}
 
 	_addLetter(letter) {
-		if (this._word.includes(letter)) {
-			const removeFromWord = this._word.splice(this._word.indexOf(letter) + 1);
+		if (this.word.includes(letter)) {
+			const removeFromWord = this.word.splice(this.word.indexOf(letter) + 1);
 			removeFromWord.forEach(l => l.inWord = false);
 		} else {
 			letter.inWord = true;
-			this._word.push(letter);
+			this.word.push(letter);
 		}
 	}
 
@@ -53,7 +53,7 @@ export class Board {
 				return;
 			this._addLetter(letter);
 			this._surroundingLetters(letter);
-			this._eventAggregator.publish('current-word', this._getText(this._word));
+			this._eventAggregator.publish('current-word', this._getText(this.word));
 		});
 	}
 
@@ -64,7 +64,7 @@ export class Board {
 				this._addHoverSubscription()
 				this._firstLetter = letter;
 				letter.wordStart = true;
-				this._word = [];
+				this.word = [];
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
 			} else {
@@ -73,7 +73,6 @@ export class Board {
 						this._win();
 						this._eventAggregator.publish('word-submitted', '');
 					} else {
-						console.log('loose: ', this._word);
 						this._wrong();
 						this._eventAggregator.publish('current-word', '');
 					}
@@ -91,14 +90,14 @@ export class Board {
 
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			const word = this._getText(this._word);
+			const word = this._getText(this.word);
 			const wordIsValid = this._wordlistService.valid(word);
 			resolve(wordIsValid);
 		});
 	}
 
 	_removeWordFromBoard() {
-		this._word.forEach(letter => {
+		this.word.forEach(letter => {
 			const $letter = $('#letter-' + letter.id);
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
@@ -122,7 +121,7 @@ export class Board {
 	}
 
 	_wrong() {
-		const word = this._word.map(letter => letter.letter).join('');
+		const word = this.word.map(letter => letter.letter).join('');
 	}
 
 	_surroundingLetters(centreLetter) {

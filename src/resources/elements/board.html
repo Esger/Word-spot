@@ -1,6 +1,10 @@
-<template style="--size: ${size}">
+<template style="--size: ${size};
+				--distance: calc(80vmin / var(--size));">
 	<require from="./board.css"></require>
 	<require from="elements/letter"></require>
+	<require from="elements/word-highlight"></require>
+
+	<word-highlight word.bind="word"></word-highlight>
 	<letter repeat.for="letter of letters"
 			model.bind="letter"
 			value="${letter.letter}"></letter>

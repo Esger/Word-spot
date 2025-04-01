@@ -1,0 +1,6 @@
+<template>
+	<require from="./word-highlight.css"></require>
+	<div repeat.for="beam of beams"
+		 class="beam au-stagger au-animate animate-fadeIn animate-fadeOut"
+		 css.bind="beam"></div>
+</template>
