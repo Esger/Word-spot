@@ -9,9 +9,17 @@ export class WordHighlight {
 
 	constructor(eventAggregator) {
 		this._eventAggregator = eventAggregator;
-		this._wordChangedSubscription = this._eventAggregator.subscribe('current-word', _ => {
-			this._buildHighlight();
+		this._wordChangedSubscription = this._eventAggregator.subscribe('current-word', word => {
+			if (word.length)
+				this._buildHighlight()
+			else this._resetBeams();
 		});
+		this._winSubscription = this._eventAggregator.subscribe('word-submitted', _ => this._resetBeams());
+	}
+
+	_resetBeams() {
+		this.beams = [];
+		this.previousLength = 0;
 	}
 
 	_buildHighlight() {
