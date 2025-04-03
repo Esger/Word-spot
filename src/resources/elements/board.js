@@ -173,14 +173,19 @@ export class Board {
 
 	fillLetters() {
 		this.letters = [];
-		for (let y = 0; y < this.size; y++) {
-			for (let x = 0; x < this.size; x++) {
-				const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
-				letter.x = x;
-				letter.y = y;
-				letter.id = this.letters.length;
-				this.letters.push(structuredClone(letter));
+		const vowels = ['A', 'E', 'I', 'O', 'U'];
+		let hasVowels = false;
+		while (!hasVowels) {
+			for (let y = 0; y < this.size; y++) {
+				for (let x = 0; x < this.size; x++) {
+					const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
+					letter.x = x;
+					letter.y = y;
+					letter.id = this.letters.length;
+					this.letters.push(structuredClone(letter));
+				}
 			}
+			hasVowels = this.letters.some(letter => vowels.includes(letter.letter));
 		}
 	}
 }
