@@ -11,7 +11,7 @@ export class WordHighlight {
 		this._eventAggregator = eventAggregator;
 		this._wordChangedSubscription = this._eventAggregator.subscribe('current-word', word => {
 			if (word.length)
-				this._buildHighlight()
+				this._updateHighlight()
 			else this._resetBeams();
 		});
 		this._winSubscription = this._eventAggregator.subscribe('word-submitted', confetti => this._resetBeams(confetti));
@@ -25,7 +25,7 @@ export class WordHighlight {
 		});
 	}
 
-	_buildHighlight() {
+	_updateHighlight() {
 		if (this.word.length > this.previousLength && this.word.length > 1) {
 			for (let i = this.word.length - 2; i < this.word.length - 1; i++) {
 				const angle = Math.atan2(this.word[i + 1].y - this.word[i].y, this.word[i + 1].x - this.word[i].x) * 180 / Math.PI;
