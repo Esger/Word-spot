@@ -9,11 +9,25 @@ html {
 		position   : relative;
 	}
 
-	h1 {
-		margin     : 3vmin auto;
-		width      : 80vmin;
-		font-weight: bold;
-		font-family: fantasy, cursive;
-		font-size  : 4vmin;
+	h1,
+	h2 {
+		display        : flex;
+		justify-content: space-between;
+		align-items    : center;
+		margin         : 3vmin auto;
+		width          : 80vmin;
+		font-weight    : bold;
+		font-family    : fantasy, cursive;
+		font-size      : 4vmin;
+
+		span:last-child {
+			margin-right: 3vmin;
+		}
+	}
+
+	h2 {
+		letter-spacing: 10px;
+		font-size     : 5vmin;
+		margin        : 0 auto;
 	}
 }

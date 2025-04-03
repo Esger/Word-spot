@@ -1,0 +1,137 @@
+word-highlight {
+	--beamColor: lightgreen;
+	--confetti1: hsl(340, 57%, 84%);
+	/* color   : palevioletred; */
+
+	.beam {
+		position        : absolute;
+		background-image: linear-gradient(transparent, var(--beamColor), transparent);
+		opacity         : 0.9;
+		width           : var(--distance);
+		height          : calc(var(--distance) / 5);
+		translate       : calc(.8 * var(--distance) / 2) calc(.61 * var(--distance) / 2);
+		transform-origin: left;
+	}
+}
+
+.au-stagger {
+	animation-delay: 100ms;
+}
+
+.animate-fadeIn {
+	&.au-enter {
+		opacity: 0;
+		scale  : .1;
+	}
+
+	&.au-enter-active {
+		animation: fadeIn .15s ease-out;
+	}
+
+	&.au-entered {
+		opacity: 1;
+		scale  : 1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		scale  : .1;
+	}
+
+	to {
+		opacity: 1;
+		scale  : 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		--beamColor: lightgreen;
+	}
+
+	10% {
+		--beamColor: transparent;
+	}
+
+	100% {
+		--beamColor: transparent;
+	}
+}
+
+.animate-confetti {
+
+	&.au-leave {
+		opacity: 1;
+
+		&::before,
+		&::after {
+			content          : '';
+			display          : block;
+			position         : absolute;
+			width            : 140%;
+			height           : 100%;
+			left             : -20%;
+			background-repeat: no-repeat;
+		}
+
+		&::before {
+			top             : -75%;
+			background-image: radial-gradient(circle, var(--confetti1) 20%, transparent 20%), radial-gradient(circle, transparent 20%, var(--confetti1) 20% 20%, transparent 30%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, transparent 10%, var(--confetti1) 20% 15%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%);
+			background-size : 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+		}
+
+		&::after {
+			bottom          : -75%;
+			background-image: radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, transparent 10%, var(--confetti1) 20% 15%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%), radial-gradient(circle, var(--confetti1) 20% 20%, transparent 20%);
+			background-size : 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+		}
+	}
+
+	&.au-leave-active {
+		animation: fadeOut 5s ease-in;
+
+		&::before {
+			animation: topBubbles ease-in-out 5s forwards;
+		}
+
+		&::after {
+			animation: bottomBubbles ease-in-out 5s forwards;
+		}
+	}
+
+	&.au-left {
+		opacity: 0;
+	}
+}
+
+@keyframes topBubbles {
+	0% {
+		background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+	}
+
+	50% {
+		background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+	}
+
+	100% {
+		background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+		background-size    : 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+	}
+}
+
+@keyframes bottomBubbles {
+	0% {
+		background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+	}
+
+	50% {
+		background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+	}
+
+	100% {
+		background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+		background-size    : 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+	}
+}

@@ -5,20 +5,35 @@ import $ from 'jquery';
 @inject(Element, EventAggregator)
 export class App {
 	title = 'Woord Spot';
+	count = 0;
+	total = 0;
 	constructor(element, eventAggregator) {
 		this._element = element;
 		this._eventAggregator = eventAggregator;
-		this._determineTouchDevice();
+	}
+	attached() {
+		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
+			this.word = word;
+			console.log('word', this.word);
+			console.log('length', word.length);
+			this.score = Math.pow(2, word.length) - 1;
+			console.log('score', this.score);
+		});
+		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', _ => {
+			this.count++;
+			this._scoreTransferTimer = setInterval(_ => {
+				if (this.score > 0) {
+					this.total++;
+					this.score--;
+				} else {
+					clearInterval(this._scoreTransferTimer);
+					this.word = '';
+				}
+			}, 25)
+		})
 	}
 
-	_determineTouchDevice() {
-		this._setIsTouchDevice('ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0);
-		$('body').one('touchstart', _ => this._setIsTouchDevice(true))
+	detached() {
+		this._wordSubscription.dispose();
 	}
-
-	_setIsTouchDevice(isTouch) {
-		$('html').toggleClass('touch-device', isTouch);
-		sessionStorage.setItem('touch-device', isTouch);
-	}
-
 }

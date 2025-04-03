@@ -3,10 +3,11 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { WordlistService } from 'services/word-list-service';
 @inject(EventAggregator, WordlistService)
 export class Board {
-	size = 7;
+	@bindable wordCount = 0;
+	size = 3;
 	letters = [];
 	_letterPool = [];
-	_word = [];
+	word = [];
 
 	constructor(eventAggregator, wordlistService) {
 		this._eventAggregator = eventAggregator;
@@ -21,13 +22,19 @@ export class Board {
 		this._hoverSubscription.dispose();
 	}
 
+	wordCountChanged() {
+		const oldSize = this.size;
+		this.size = Math.min(Math.floor(this.wordCount / 10) + 3, 10);
+		(oldSize !== this.size) && this.fillLetters();
+	}
+
 	_addLetter(letter) {
-		if (this._word.includes(letter)) {
-			const removeFromWord = this._word.splice(this._word.indexOf(letter) + 1);
+		if (this.word.includes(letter)) {
+			const removeFromWord = this.word.splice(this.word.indexOf(letter) + 1);
 			removeFromWord.forEach(l => l.inWord = false);
 		} else {
 			letter.inWord = true;
-			this._word.push(letter);
+			this.word.push(letter);
 		}
 	}
 
@@ -46,6 +53,7 @@ export class Board {
 				return;
 			this._addLetter(letter);
 			this._surroundingLetters(letter);
+			this._eventAggregator.publish('current-word', this._getText(this.word));
 		});
 	}
 
@@ -56,17 +64,17 @@ export class Board {
 				this._addHoverSubscription()
 				this._firstLetter = letter;
 				letter.wordStart = true;
-				this._word = [];
+				this.word = [];
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
 			} else {
 				this._checkWord().then(resolve => {
 					if (resolve) {
-						console.log('win: ', this._word);
 						this._win();
+						this._eventAggregator.publish('word-submitted', '');
 					} else {
-						console.log('loose: ', this._word);
 						this._wrong();
+						this._eventAggregator.publish('current-word', '');
 					}
 					this._resetStates();
 					this._firstLetter = null;
@@ -76,16 +84,20 @@ export class Board {
 		});
 	}
 
+	_getText(word) {
+		return word.map(letter => letter.letter).join('');
+	}
+
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			const word = this._word.map(letter => letter.letter).join('');
+			const word = this._getText(this.word);
 			const wordIsValid = this._wordlistService.valid(word);
 			resolve(wordIsValid);
 		});
 	}
 
 	_removeWordFromBoard() {
-		this._word.forEach(letter => {
+		this.word.forEach(letter => {
 			const $letter = $('#letter-' + letter.id);
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
@@ -109,7 +121,7 @@ export class Board {
 	}
 
 	_wrong() {
-		const word = this._word.map(letter => letter.letter).join('');
+		const word = this.word.map(letter => letter.letter).join('');
 	}
 
 	_surroundingLetters(centreLetter) {
