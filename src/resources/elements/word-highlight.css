@@ -105,6 +105,15 @@ word-highlight {
 	&.au-left {
 		opacity: 0;
 	}
+
+	&.no-confetti {
+
+		&::before,
+		&::after {
+			display: none;
+			opacity: 0;
+		}
+	}
 }
 
 @keyframes topBubbles {

@@ -14,12 +14,15 @@ export class WordHighlight {
 				this._buildHighlight()
 			else this._resetBeams();
 		});
-		this._winSubscription = this._eventAggregator.subscribe('word-submitted', _ => this._resetBeams());
+		this._winSubscription = this._eventAggregator.subscribe('word-submitted', confetti => this._resetBeams(confetti));
 	}
 
-	_resetBeams() {
-		this.beams = [];
-		this.previousLength = 0;
+	_resetBeams(confetti = true) {
+		this.confetti = confetti;
+		setTimeout(() => {
+			this.beams = [];
+			this.previousLength = 0;
+		});
 	}
 
 	_buildHighlight() {
