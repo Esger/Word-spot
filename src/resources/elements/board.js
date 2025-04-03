@@ -71,9 +71,10 @@ export class Board {
 				this._checkWord().then(resolve => {
 					if (resolve) {
 						this._win();
-						this._eventAggregator.publish('word-submitted', '');
+						this._eventAggregator.publish('word-submitted', true);
 					} else {
 						this._wrong();
+						this._eventAggregator.publish('word-submitted', false);
 						this._eventAggregator.publish('current-word', '');
 					}
 					this._resetStates();
@@ -91,7 +92,7 @@ export class Board {
 	_checkWord() {
 		return new Promise((resolve, reject) => {
 			const word = this._getText(this.word);
-			const wordIsValid = this._wordlistService.valid(word);
+			const wordIsValid = this._wordlistService.isValid(word);
 			resolve(wordIsValid);
 		});
 	}
