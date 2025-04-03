@@ -91,7 +91,7 @@ export class Board {
 	_checkWord() {
 		return new Promise((resolve, reject) => {
 			const word = this._getText(this.word);
-			const wordIsValid = this._wordlistService.valid(word);
+			const wordIsValid = this._wordlistService.isValid(word);
 			resolve(wordIsValid);
 		});
 	}

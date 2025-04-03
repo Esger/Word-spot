@@ -28,7 +28,7 @@ export class WordlistService {
 		return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	}
 
-	valid(word) {
+	isValid(word) {
 		const valid = this.wordlist.has(word.toLowerCase());
 		return valid;
 	}
