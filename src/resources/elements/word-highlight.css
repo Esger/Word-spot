@@ -1,7 +1,8 @@
 word-highlight {
-	--beamColor: lightgreen;
-	--confetti1: hsl(340, 57%, 84%);
-	/* color   : palevioletred; */
+	--beamColor       : lightgreen;
+	--confetti1       : hsl(340, 57%, 84%);
+	--confettiDuration: 1.5s;
+	/* color          : palevioletred; */
 
 	.beam {
 		position        : absolute;
@@ -90,14 +91,14 @@ word-highlight {
 	}
 
 	&.au-leave-active {
-		animation: fadeOut 5s ease-in;
+		animation: fadeOut var(--confettiDuration) ease-out;
 
 		&::before {
-			animation: topBubbles ease-in-out 5s forwards;
+			animation: topBubbles ease-in-out var(--confettiDuration) forwards;
 		}
 
 		&::after {
-			animation: bottomBubbles ease-in-out 5s forwards;
+			animation: bottomBubbles ease-in-out var(--confettiDuration) forwards;
 		}
 	}
 
