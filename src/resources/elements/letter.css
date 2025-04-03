@@ -32,7 +32,7 @@ letter {
 		}
 
 		&.adjacent {
-			background-color: lightgray;
+			background-color: #e2e2e2;
 
 			&:hover {
 				background-color: palegreen;
