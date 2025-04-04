@@ -13,7 +13,7 @@ export class Board {
 		this._eventAggregator = eventAggregator;
 		this._wordlistService = wordlistService;
 		this.fillPool();
-		this.fillLetters();
+		this._fillLetters();
 		this._addLetterClickedSubscription();
 	}
 
@@ -25,7 +25,7 @@ export class Board {
 	wordCountChanged() {
 		const oldSize = this.size;
 		this.size = Math.min(Math.floor(this.wordCount / 10) + 3, 10);
-		(oldSize !== this.size) && this.fillLetters();
+		(oldSize !== this.size) && this._fillLetters();
 	}
 
 	_addLetter(letter) {
@@ -171,11 +171,14 @@ export class Board {
 		});
 	}
 
-	fillLetters() {
-		this.letters = [];
+	_hasVowels(letters) {
 		const vowels = ['A', 'E', 'I', 'O', 'U'];
-		let hasVowels = false;
-		while (!hasVowels) {
+		return letters.some(letter => vowels.includes(letter.letter));
+	}
+
+	_fillLetters() {
+		this.letters = [];
+		while (!this._hasVowels(this.letters)) {
 			for (let y = 0; y < this.size; y++) {
 				for (let x = 0; x < this.size; x++) {
 					const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
@@ -185,7 +188,6 @@ export class Board {
 					this.letters.push(structuredClone(letter));
 				}
 			}
-			hasVowels = this.letters.some(letter => vowels.includes(letter.letter));
 		}
 	}
 }
