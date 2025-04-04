@@ -15,12 +15,10 @@ export class App {
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
 			this.word = word;
 			console.log('word', this.word);
-			console.log('length', word.length);
 			this.score = Math.pow(2, word.length) - 1;
-			console.log('score', this.score);
 		});
-		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', _ => {
-			this.count++;
+		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
+			this.count += success;
 			this._scoreTransferTimer = setInterval(_ => {
 				if (this.score > 0) {
 					this.total++;
