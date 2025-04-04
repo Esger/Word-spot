@@ -112,6 +112,8 @@ export class Board {
 			});
 			letter.removed = true;
 			letter.inWord = false;
+			letter.oldLetter = letter.letter;
+			letter.letter = undefined;
 			const lettersAbove = this.letters.filter(l => l.y < letter.y && l.x === letter.x);
 			lettersAbove.forEach(l => l.y++);
 		});
