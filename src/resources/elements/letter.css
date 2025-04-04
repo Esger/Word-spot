@@ -18,7 +18,6 @@ letter {
 		align-items     : center;
 		border-radius   : .7vmin;
 		font-size       : 5vmin;
-		text-transform  : lowercase;
 		cursor          : pointer;
 		background-color: whitesmoke;
 
