@@ -20,6 +20,7 @@ letter {
 		font-size       : 5vmin;
 		cursor          : pointer;
 		background-color: whitesmoke;
+		color           : inherit;
 
 		&:hover {
 			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5);
