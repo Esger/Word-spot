@@ -103,8 +103,9 @@ export class Board {
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
 				letter.y = -1;
+			letter.letter = this._getRandomLetter().letter;
 				setTimeout(_ => {
-					letter.letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)].letter;
+				// top of column
 					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
 					letter.removed = false;
 					letter.entering = false;
@@ -178,12 +179,16 @@ export class Board {
 		return letters.some(letter => vowels.includes(letter.letter));
 	}
 
+	_getRandomLetter() {
+		return this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
+	}
+
 	_fillLetters() {
 		this.letters = [];
 		while (!this._hasVowels(this.letters)) {
 			for (let y = 0; y < this.size; y++) {
 				for (let x = 0; x < this.size; x++) {
-					const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
+					const letter = this._getRandomLetter();
 					letter.x = x;
 					letter.y = y;
 					letter.id = this.letters.length;
