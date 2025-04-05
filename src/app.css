@@ -32,6 +32,18 @@ html {
 		margin        : 0 auto;
 		text-transform: lowercase;
 
+		span {
+			flex: 0 0 20%;
+		}
+
+		.word {
+			flex: 0 0 60%;
+		}
+
+		.score {
+			text-align: right;
+		}
+
 		span::first-letter {
 			text-transform: uppercase;
 		}
