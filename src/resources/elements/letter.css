@@ -18,9 +18,9 @@ letter {
 		align-items     : center;
 		border-radius   : .7vmin;
 		font-size       : 5vmin;
-		text-transform  : lowercase;
 		cursor          : pointer;
 		background-color: whitesmoke;
+		color           : inherit;
 
 		&:hover {
 			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5);
@@ -32,7 +32,7 @@ letter {
 		}
 
 		&.adjacent {
-			background-color: lightgray;
+			background-color: #e2e2e2;
 
 			&:hover {
 				background-color: palegreen;

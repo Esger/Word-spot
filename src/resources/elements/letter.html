@@ -9,6 +9,6 @@
 				${model.adjacent ? 'adjacent' : ''}
 				${model.inWord ? 'inWord' : ''}
 				${model.removed ? 'removed' : ''}">
-		${model.letter}
+		${model.letter || model.oldLetter}
 	</button>
 </template>

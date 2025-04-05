@@ -1,7 +1,7 @@
 word-highlight {
 	--beamColor       : lightgreen;
 	--confetti1       : hsl(340, 57%, 84%);
-	--confettiDuration: 1.5s;
+	--confettiDuration: .5s;
 	/* color          : palevioletred; */
 
 	.beam {

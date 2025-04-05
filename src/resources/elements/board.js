@@ -13,7 +13,7 @@ export class Board {
 		this._eventAggregator = eventAggregator;
 		this._wordlistService = wordlistService;
 		this.fillPool();
-		this.fillLetters();
+		this._fillLetters();
 		this._addLetterClickedSubscription();
 	}
 
@@ -25,7 +25,7 @@ export class Board {
 	wordCountChanged() {
 		const oldSize = this.size;
 		this.size = Math.min(Math.floor(this.wordCount / 10) + 3, 10);
-		(oldSize !== this.size) && this.fillLetters();
+		(oldSize !== this.size) && this._fillLetters();
 	}
 
 	_addLetter(letter) {
@@ -103,8 +103,11 @@ export class Board {
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
 				letter.y = -1;
+				do {
+					letter.letter = this._getRandomLetter().letter;
+				} while (!this._hasVowels(this.letters));
 				setTimeout(_ => {
-					letter.letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)].letter;
+					// top of column
 					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
 					letter.removed = false;
 					letter.entering = false;
@@ -112,6 +115,8 @@ export class Board {
 			});
 			letter.removed = true;
 			letter.inWord = false;
+			letter.oldLetter = letter.letter;
+			letter.letter = undefined;
 			const lettersAbove = this.letters.filter(l => l.y < letter.y && l.x === letter.x);
 			lettersAbove.forEach(l => l.y++);
 		});
@@ -171,15 +176,26 @@ export class Board {
 		});
 	}
 
-	fillLetters() {
+	_hasVowels(letters) {
+		const vowels = ['A', 'E', 'I', 'O', 'U'];
+		return letters.some(letter => vowels.includes(letter.letter));
+	}
+
+	_getRandomLetter() {
+		return this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
+	}
+
+	_fillLetters() {
 		this.letters = [];
-		for (let y = 0; y < this.size; y++) {
-			for (let x = 0; x < this.size; x++) {
-				const letter = this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
-				letter.x = x;
-				letter.y = y;
-				letter.id = this.letters.length;
-				this.letters.push(structuredClone(letter));
+		while (!this._hasVowels(this.letters)) {
+			for (let y = 0; y < this.size; y++) {
+				for (let x = 0; x < this.size; x++) {
+					const letter = this._getRandomLetter();
+					letter.x = x;
+					letter.y = y;
+					letter.id = this.letters.length;
+					this.letters.push(structuredClone(letter));
+				}
 			}
 		}
 	}
