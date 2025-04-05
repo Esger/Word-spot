@@ -26,6 +26,13 @@ html {
 		}
 	}
 
+	h1 {
+		.highScore {
+			margin-inline: 6vmin auto;
+			color        : gray
+		}
+	}
+
 	h2 {
 		letter-spacing: 10px;
 		font-size     : 5vmin;
