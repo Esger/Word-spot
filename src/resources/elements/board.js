@@ -103,9 +103,11 @@ export class Board {
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
 				letter.y = -1;
-			letter.letter = this._getRandomLetter().letter;
+				do {
+					letter.letter = this._getRandomLetter().letter;
+				} while (!this._hasVowels(this.letters));
 				setTimeout(_ => {
-				// top of column
+					// top of column
 					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
 					letter.removed = false;
 					letter.entering = false;
