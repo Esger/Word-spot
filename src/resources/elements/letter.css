@@ -24,7 +24,7 @@ letter {
 		box-shadow      : inset 0 0 1vmin 0 grey;
 
 		&:hover {
-			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.5), inset 0 0 1vmin 0 rgba(128, 128, 128, 0.5);
+			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.9), inset 0 0 1vmin 0 rgba(128, 128, 128, 0.5);
 		}
 
 		&.selected {
@@ -32,7 +32,7 @@ letter {
 			color           : greenyellow;
 		}
 
-		x§ &.adjacent {
+		&.adjacent {
 			background-color: #e2e2e2;
 
 			&:hover {
