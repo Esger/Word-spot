@@ -41,11 +41,11 @@ letter {
 		}
 
 		&.inWord {
-			background-color: lightgreen;
+			background-color: hsl(120 73% 85% / 1);
 		}
 
 		&.removed {
-			background-color: plum;
+			background-color: lightgreen;
 			transform-origin: bottom;
 			transition      : transform .5s ease-in;
 			transform       : scale(1, 0);

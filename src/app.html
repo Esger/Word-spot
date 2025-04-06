@@ -7,9 +7,11 @@
 		<span>${total || ''}</span>
 	</h1>
 	<board word-count.bind="count"></board>
-	<h2><span class="count">${count || ''}</span>
+	<h2 id="feedback"
+		style="--translate: 25vw 0">
+		<span class="count">${count || ''}</span>
 		<span class="word au-stagger">
-			<span repeat.for="letter of word.split('')"
+			<span repeat.for="letter of word.split('').reverse()"
 				class="letter au-animate animate-flyOut">${letter}</span>
 		</span>
 		<span class="score">${score}</span>
