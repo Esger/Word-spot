@@ -94,11 +94,11 @@ word-highlight {
 		animation: fadeOut var(--confettiDuration) ease-out;
 
 		&::before {
-			animation: topBubbles ease-in-out var(--confettiDuration) forwards;
+			animation: topBubbles ease-in-out var(--confettiDuration);
 		}
 
 		&::after {
-			animation: bottomBubbles ease-in-out var(--confettiDuration) forwards;
+			animation: bottomBubbles ease-in-out var(--confettiDuration);
 		}
 	}
 

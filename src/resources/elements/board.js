@@ -30,6 +30,7 @@ export class Board {
 
 	_addLetter(letter) {
 		if (this.word.includes(letter)) {
+			this._setAnimation('down');
 			const removeFromWord = this.word.splice(this.word.indexOf(letter) + 1);
 			removeFromWord.forEach(l => l.inWord = false);
 		} else {
@@ -123,13 +124,20 @@ export class Board {
 	}
 
 	_win() {
-		document.getElementById('feedback').style.setProperty('--translate', '25vw 0');
+		this._setAnimation('right');
 		this._removeWordFromBoard();
 	}
 
 	_wrong() {
-		document.getElementById('feedback').style.setProperty('--translate', '0 20vw');
+		this._setAnimation('down');
 		const word = this.word.map(letter => letter.letter).join('');
+	}
+
+	_setAnimation(direction = 'right') {
+		if (direction === 'right')
+			document.getElementById('feedback').style.setProperty('--translate', '25vw 0');
+		if (direction === 'down')
+			document.getElementById('feedback').style.setProperty('--translate', '0 30vw');
 	}
 
 	_surroundingLetters(centreLetter) {

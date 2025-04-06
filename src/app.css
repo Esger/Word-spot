@@ -37,7 +37,6 @@ html {
 		letter-spacing: 10px;
 		font-size     : 5vmin;
 		margin        : 0 auto;
-		text-transform: lowercase;
 
 		.count,
 		.score {
@@ -53,15 +52,21 @@ html {
 			display        : flex;
 			flex-direction : row-reverse;
 			justify-content: flex-end;
+			overflow       : hidden;
+
+			span {
+				text-transform: lowercase;
+
+				&:last-child {
+					text-transform: uppercase;
+				}
+			}
 		}
 
 		.score {
 			text-align: right;
 		}
 
-		span::first-letter {
-			text-transform: uppercase;
-		}
 	}
 
 }
