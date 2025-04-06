@@ -123,10 +123,12 @@ export class Board {
 	}
 
 	_win() {
+		document.getElementById('feedback').style.setProperty('--translate', '25vw 0');
 		this._removeWordFromBoard();
 	}
 
 	_wrong() {
+		document.getElementById('feedback').style.setProperty('--translate', '0 20vw');
 		const word = this.word.map(letter => letter.letter).join('');
 	}
 

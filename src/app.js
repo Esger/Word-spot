@@ -39,5 +39,6 @@ export class App {
 
 	detached() {
 		this._wordSubscription.dispose();
+		clearInterval(this._scoreTransferTimer);
 	}
 }
