@@ -11,44 +11,43 @@ letter {
 	}
 
 	button {
-		width              : calc(var(--distance) * .8);
-		aspect-ratio       : 1;
-		display            : flex;
-		justify-content    : center;
-		align-items        : center;
-		border-radius      : .7vmin;
-		font-size          : calc(80vmin / var(--size) / 3);
-		cursor             : pointer;
-		background-color   : whitesmoke;
-		background-image   : url('assets/images/hout.webp');
-		background-repeat  : no-repeat;
-		background-position: var(--bgPos);
-		color              : #444;
-		box-shadow         : 0 0 1vmin rgba(0, 0, 0, 0.2), inset 0 0 1vmin 0 grey;
+		width                : calc(var(--distance) * .8);
+		aspect-ratio         : 1;
+		display              : flex;
+		justify-content      : center;
+		align-items          : center;
+		border-radius        : .7vmin;
+		cursor               : pointer;
+		background-color     : whitesmoke;
+		background-image     : url('assets/images/hout.webp');
+		background-repeat    : no-repeat;
+		background-position  : var(--bgPos);
+		background-blend-mode: multiply;
+		font-family          : courier;
+		font-size            : calc(80vmin / var(--size) / 2.5);
+		color                : #444;
+		box-shadow           : 0 0 1vmin rgba(0, 0, 0, 0.2), inset 0 0 1vmin 0 grey;
+		text-shadow          : 2px 2px 3px rgba(255, 255, 255, 0.6), -2px -2px 3px rgba(0, 0, 0, 0.2);
+		padding-bottom       : .1lh;
 
 		&:hover {
 			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.8), inset 0 0 1vmin 0 rgba(128, 128, 128, 0.5);
 		}
 
-		&.selected {
-			background-color: gray;
-			color           : greenyellow;
-		}
-
 		&.adjacent {
-			background-color: #e2e2e2;
+			background-color     : #d2d2d2;
+			background-blend-mode: luminosity;
 
 			&:hover {
-				background-color: palegreen;
+				background-color: hsl(120 73% 85% / 1);
 			}
 		}
 
 		&.inWord {
-			background-color: hsl(120 73% 85% / 1);
+			background-color: hsl(59 73% 68% / 1);
 		}
 
 		&.removed {
-			background-color: lightgreen;
 			transform-origin: bottom;
 			transition      : transform .5s ease-in;
 			transform       : scale(1, 0);
