@@ -10,8 +10,8 @@ export class WordlistService {
 
 	async loadWordlists() {
 		const [wordlist1, wordlist2] = await Promise.all([
-			this.loadWordlist('assets/OpenTaal-210G-flexievormen.txt'),
-			this.loadWordlist('assets/OpenTaal-210G-basis-gekeurd.txt')
+			this.loadWordlist('assets/wordlists/OpenTaal-210G-flexievormen.txt'),
+			this.loadWordlist('assets/wordlists/OpenTaal-210G-basis-gekeurd.txt')
 		]);
 
 		const unionSet = wordlist1.union(wordlist2);
