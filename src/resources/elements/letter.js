@@ -6,6 +6,11 @@ export class Letter {
 	@bindable model;
 	constructor(eventAggregator) {
 		this._eventAggregator = eventAggregator;
+		this.backgroundPosition = this._getRandomPercentage() + ' ' + this._getRandomPercentage();
+	}
+
+	_getRandomPercentage() {
+		return Math.floor(Math.random() * 100) + '%';
 	}
 
 	showSurroundingLetters() {

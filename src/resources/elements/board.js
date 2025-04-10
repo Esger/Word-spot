@@ -180,7 +180,8 @@ export class Board {
 		];
 		this._letterPool = [];
 		alphabet.forEach(letter => {
-			for (let i = 0; i < letter.frequency; i++) {
+			const count = letter.frequency * 100;
+			for (let i = 0; i < count; i++) {
 				this._letterPool.push({ letter: letter.letter });
 			}
 		});
