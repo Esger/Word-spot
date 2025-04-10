@@ -1,7 +1,8 @@
 <template id="letter-${model.id}"
 		  class="${model.entering ? 'entering' : ''}"
 		  style="--x: ${model.x}; 
-				 --y: ${model.y}">
+				 --y: ${model.y};
+				 --bgPos: ${backgroundPosition};">
 	<require from="./letter.css"></require>
 	<button click.delegate="toggleSelected()"
 			mouseover.delegate="showSurroundingLetters(model)"
