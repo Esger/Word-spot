@@ -29,6 +29,7 @@ letter {
 		box-shadow           : 0 0 1vmin rgba(0, 0, 0, 0.2), inset 0 0 1vmin 0 grey;
 		text-shadow          : 2px 2px 3px rgba(255, 255, 255, 0.6), -2px -2px 3px rgba(0, 0, 0, 0.2);
 		padding-bottom       : .1lh;
+		user-select          : none;
 
 		&:hover {
 			box-shadow: 0 0 1vmin rgba(0, 0, 0, 0.8), inset 0 0 1vmin 0 rgba(128, 128, 128, 0.5);
