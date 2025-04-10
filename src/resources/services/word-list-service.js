@@ -28,6 +28,11 @@ export class WordlistService {
 		return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	}
 
+	getText(word) {
+		if (!Array.isArray(word)) return word;
+		return word.map(letter => letter.letter).join('');
+	}
+
 	isValid(word) {
 		const valid = this.wordlist.has(word.toLowerCase());
 		return valid;

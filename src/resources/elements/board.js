@@ -4,7 +4,7 @@ import { WordlistService } from 'services/word-list-service';
 @inject(EventAggregator, WordlistService)
 export class Board {
 	@bindable wordCount = 0;
-	size = 3;
+	@bindable size = 3;
 	letters = [];
 	_letterPool = [];
 	word = [];
@@ -54,7 +54,7 @@ export class Board {
 				return;
 			this._addLetter(letter);
 			this._surroundingLetters(letter);
-			this._eventAggregator.publish('current-word', this._getText(this.word));
+			this._eventAggregator.publish('current-word', this.word);
 		});
 	}
 
@@ -86,13 +86,9 @@ export class Board {
 		});
 	}
 
-	_getText(word) {
-		return word.map(letter => letter.letter).join('');
-	}
-
 	_checkWord() {
 		return new Promise((resolve, reject) => {
-			const word = this._getText(this.word);
+			const word = this._wordlistService.getText(this.word);
 			const wordIsValid = this._wordlistService.isValid(word);
 			resolve(wordIsValid);
 		});
