@@ -30,18 +30,17 @@ export class WordHighlight {
 		});
 	}
 
-	_updateHighlight() {
 	_updateBeams() {
 		if (this.word.length > this.previousLength && this.word.length > 1) {
 			const lastLetter = this.word[this.word.length - 1];
 			const preLastLetter = this.word[this.word.length - 2];
 			const angle = Math.atan2(lastLetter.y - preLastLetter.y, lastLetter.x - preLastLetter.x) * 180 / Math.PI;
-				const beam = {
+			const beam = {
 				left: `calc(var(--distance) * ${preLastLetter.x})`,
 				top: `calc(var(--distance) * ${preLastLetter.y})`,
 				rotate: `${angle}deg`
-				}
-				this.beams.push(beam);
+			}
+			this.beams.push(beam);
 		} else {
 			this.beams.splice(this.word.length - 1);
 		}
