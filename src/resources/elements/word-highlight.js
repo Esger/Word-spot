@@ -29,8 +29,6 @@ export class WordHighlight {
 		this.highlight = false;
 		this.beams = [];
 		this.previousLength = 0;
-		setTimeout(_ => {
-		});
 	}
 
 	_updateBeams() {
