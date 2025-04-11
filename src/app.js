@@ -20,7 +20,8 @@ export class App {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
 			this.word = this._wordlistService.getText(word);
-			this.score = Math.pow(2, (word.length + this.getBonus(word))) - 1;
+			const multiplier = this.getBonus(word);
+			this.score = Math.pow(2, (word.length + multiplier)) - 1;
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
 			this.count += success;
