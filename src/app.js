@@ -45,12 +45,10 @@ export class App {
 	getBonus(word) {
 		let multiplier = 0;
 		if (word.length == this.size && Array.isArray(word)) {
-			// verticaal woord x2
-			if (word.every(letter => letter.x === word[0].x))
-				multiplier++;
 			// horizontaal woord x2
-			if (word.every(letter => letter.y === word[0].y))
-				multiplier++;
+			word.every(letter => letter.x === word[0].x) && multiplier++;
+			// verticaal woord x2
+			word.every(letter => letter.y === word[0].y) && multiplier++;
 			// diagonaal woord x4
 			const last = this.size - 1;
 			const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
@@ -58,6 +56,8 @@ export class App {
 			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
 			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
 				multiplier += 2;
+
+			// rechthoek woord x2
 		}
 		return multiplier;
 	}

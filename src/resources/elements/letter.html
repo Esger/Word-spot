@@ -4,7 +4,7 @@
 				 --y: ${model.y};
 				 --bgPos: ${backgroundPosition};">
 	<require from="./letter.css"></require>
-	<button click.delegate="toggleSelected() & debounce : 200"
+	<button click.delegate="toggleSelected() & debounce : 250"
 			mouseover.delegate="showSurroundingLetters(model)"
 			class="${model.selected ? 'selected' : ''}
 				${model.adjacent ? 'adjacent' : ''}
