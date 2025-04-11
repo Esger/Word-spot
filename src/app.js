@@ -20,14 +20,8 @@ export class App {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
 			this.word = this._wordlistService.getText(word);
-			let bonus = 0;
-			if (word.length == this.size) {
-				if (word.every(letter => letter.x === word[0].x))
-					bonus++;
-				if (word.every(letter => letter.y === word[0].y))
-					bonus++;
-			}
-			this.score = Math.pow(2, (word.length + bonus)) - 1;
+
+			this.score = Math.pow(2, (word.length + this.getBonus(word))) - 1;
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
 			this.count += success;
@@ -45,6 +39,26 @@ export class App {
 				}
 			}, 25);
 		});
+	}
+
+	getBonus(word) {
+		let multiplier = 0;
+		if (word.length == this.size && Array.isArray(word)) {
+			// verticaal woord x2
+			if (word.every(letter => letter.x === word[0].x))
+				multiplier++;
+			// horizontaal woord x2
+			if (word.every(letter => letter.y === word[0].y))
+				multiplier++;
+			// diagonaal woord x4
+			const last = this.size - 1;
+			const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
+			const wordStart = '' + word[0].x + word[0].y;
+			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
+			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
+				multiplier += 2;
+		}
+		return multiplier;
 	}
 
 	detached() {
