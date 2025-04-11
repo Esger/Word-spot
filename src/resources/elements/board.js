@@ -188,13 +188,17 @@ export class Board {
 		return letters.some(letter => vowels.includes(letter.letter));
 	}
 
+	_allVowels() {
+		const vowels = ['A', 'E', 'I', 'O', 'U'];
+		return this.letters.every(letter => vowels.includes(letter.letter));
+	}
 	_getRandomLetter() {
 		return this._letterPool[Math.floor(Math.random() * this._letterPool.length)];
 	}
 
 	_fillLetters() {
 		this.letters = [];
-		while (!this._hasVowels(this.letters)) {
+		while (!this._hasVowels(this.letters) && this._allVowels()) {
 			for (let y = 0; y < this.size; y++) {
 				for (let x = 0; x < this.size; x++) {
 					const letter = this._getRandomLetter();
