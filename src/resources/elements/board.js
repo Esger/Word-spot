@@ -34,8 +34,8 @@ export class Board {
 			const removeFromWord = this.word.splice(this.word.indexOf(letter) + 1);
 			removeFromWord.forEach(l => l.inWord = false);
 		} else {
-			letter.inWord = true;
 			this.word.push(letter);
+			letter.inWord = true;
 		}
 	}
 
