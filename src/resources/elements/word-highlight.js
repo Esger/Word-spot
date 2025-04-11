@@ -15,7 +15,7 @@ export class WordHighlight {
 			else this._resetBeams();
 		});
 		this._multiplierSubscription = this._eventAggregator.subscribe('multiplier', multiplier => this.highlight = multiplier > 0);
-		this._winSubscription = this._eventAggregator.subscribe('word-submitted', confetti => this._resetBeams(confetti));
+		this._winSubscription = this._eventAggregator.subscribe('word-submitted', win => this._resetBeams(win));
 	}
 
 	detached() {
@@ -24,8 +24,8 @@ export class WordHighlight {
 		this._winSubscription.dispose();
 	}
 
-	_resetBeams(confetti = true) {
-		this.confetti = confetti;
+	_resetBeams(win = true) {
+		this.confetti = win;
 		this.highlight = false;
 		this.beams = [];
 		this.previousLength = 0;
