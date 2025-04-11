@@ -14,19 +14,22 @@ export class WordHighlight {
 				this._updateBeams()
 			else this._resetBeams();
 		});
+		this._multiplierSubscription = this._eventAggregator.subscribe('multiplier', multiplier => this.highlight = multiplier > 0);
 		this._winSubscription = this._eventAggregator.subscribe('word-submitted', confetti => this._resetBeams(confetti));
 	}
 
 	detached() {
 		this._wordChangedSubscription.dispose();
+		this._multiplierSubscription.dispose();
 		this._winSubscription.dispose();
 	}
 
 	_resetBeams(confetti = true) {
 		this.confetti = confetti;
+		this.highlight = false;
+		this.beams = [];
+		this.previousLength = 0;
 		setTimeout(_ => {
-			this.beams = [];
-			this.previousLength = 0;
 		});
 	}
 

@@ -1,4 +1,5 @@
 word-highlight {
+	--highlightColor  : goldenrod;
 	--beamColor       : darkkhaki;
 	--confetti1       : hsl(340, 57%, 84%);
 	--confettiDuration: .5s;
@@ -12,6 +13,11 @@ word-highlight {
 		height          : calc(var(--distance) / 5);
 		translate       : calc(.8 * var(--distance) / 2) calc(.61 * var(--distance) / 2);
 		transform-origin: left;
+
+	}
+
+	&.highlight .beam {
+		box-shadow: 0 0 calc(var(--distance) / 3) var(--highlightColor), 0 0 calc(var(--distance) / 2) var(--highlightColor);
 	}
 }
 

@@ -22,6 +22,7 @@ export class App {
 			this.word = this._wordlistService.getText(word);
 			const multiplier = this.getBonus(word);
 			this.score = Math.pow(2, (word.length + multiplier)) - 1;
+			this._eventAggregator.publish('multiplier', multiplier);
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
 			this.count += success;
