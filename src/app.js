@@ -20,7 +20,7 @@ export class App {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
 			this.word = this._wordlistService.getText(word);
-			const multiplier = this.getBonus(word);
+			const multiplier = this._getBonus(word);
 			this.score = Math.pow(2, (word.length + multiplier)) - 1;
 			this._eventAggregator.publish('multiplier', multiplier);
 		});
@@ -42,7 +42,7 @@ export class App {
 		});
 	}
 
-	getBonus(word) {
+	_getBonus(word) {
 		if (!Array.isArray(word)) return 0;
 		let multiplier = 0;
 		const minX = word.reduce((min, letter) => Math.min(min, letter.x), word[0].x);
@@ -85,6 +85,7 @@ export class App {
 
 	detached() {
 		this._wordSubscription.dispose();
+		this._wordSubmittedSubscription
 		clearInterval(this._scoreTransferTimer);
 	}
 }
