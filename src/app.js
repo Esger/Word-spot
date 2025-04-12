@@ -43,22 +43,43 @@ export class App {
 	}
 
 	getBonus(word) {
+		if (!Array.isArray(word)) return 0;
 		let multiplier = 0;
-		if (word.length == this.size && Array.isArray(word)) {
-			// horizontaal woord x2
-			word.every(letter => letter.x === word[0].x) && multiplier++;
-			// verticaal woord x2
-			word.every(letter => letter.y === word[0].y) && multiplier++;
-			// diagonaal woord x4
-			const last = this.size - 1;
-			const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
-			const wordStart = '' + word[0].x + word[0].y;
-			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
-			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
-				multiplier += 2;
-
-			// rechthoek woord x2
+		const minX = word.reduce((min, letter) => Math.min(min, letter.x), word[0].x);
+		const maxX = word.reduce((max, letter) => Math.max(max, letter.x), word[0].x);
+		const minY = word.reduce((min, letter) => Math.min(min, letter.y), word[0].y);
+		const maxY = word.reduce((max, letter) => Math.max(max, letter.y), word[0].y);
+		const dx = maxX - minX;
+		const dy = maxY - minY;
+		switch (word.length) {
+			case this.size:
+				// horizontaal woord x2
+				word.every(letter => letter.x === word[0].x) && multiplier++;
+				// verticaal woord x2
+				word.every(letter => letter.y === word[0].y) && multiplier++;
+				// diagonaal woord x4
+				const last = this.size - 1;
+				const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
+				const wordStart = '' + word[0].x + word[0].y;
+				const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
+				if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
+					multiplier += 2;
+				break;
+			case 4: // vierkant woord x2
+				dx == 1 && dy == 1 && multiplier++;
+				break;
+			case 6: // rechthoek 2x3 woord x4
+				word.length == 6 && dx + dy == 3 && (multiplier += 2);
+				break;
+			case 9: // vierkant woord x4
+				dx == 2 && dx == 2 && (multiplier += 2);
+				break;
+			case 16: // vierkant woord x4
+				dx == 3 && dx == 3 && (multiplier += 3);
+				break;
+			default: break;
 		}
+
 		return multiplier;
 	}
 
