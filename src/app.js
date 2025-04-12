@@ -52,19 +52,6 @@ export class App {
 		const dx = maxX - minX;
 		const dy = maxY - minY;
 		switch (word.length) {
-			case this.size:
-				// horizontaal woord x2
-				word.every(letter => letter.x === word[0].x) && multiplier++;
-				// verticaal woord x2
-				word.every(letter => letter.y === word[0].y) && multiplier++;
-				// diagonaal woord x4
-				const last = this.size - 1;
-				const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
-				const wordStart = '' + word[0].x + word[0].y;
-				const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
-				if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
-					multiplier += 2;
-				break;
 			case 4: // vierkant woord x2
 				dx == 1 && dy == 1 && multiplier++;
 				break;
@@ -78,6 +65,19 @@ export class App {
 				dx == 3 && dx == 3 && (multiplier += 3);
 				break;
 			default: break;
+		}
+		if (word.length === this.size) {
+			// horizontaal woord x2
+			word.every(letter => letter.x === word[0].x) && multiplier++;
+			// verticaal woord x2
+			word.every(letter => letter.y === word[0].y) && multiplier++;
+			// diagonaal woord x4
+			const last = this.size - 1;
+			const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
+			const wordStart = '' + word[0].x + word[0].y;
+			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
+			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
+				multiplier += 2;
 		}
 
 		return multiplier;
