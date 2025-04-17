@@ -56,8 +56,10 @@ export class App {
 				dx == 1 && dy == 1 && multiplier++;
 				break;
 			case 6: // rechthoek 2x3 woord x4
-				word.length == 6 && dx + dy == 3 && (multiplier += 2);
+				dx + dy == 3 && (multiplier += 2);
 				break;
+			case 8: // rechthoek 2x4 woord x4
+				((dx == 3 && dy == 1) || (dx == 1 && dy == 3)) && (multiplier += 2);
 			case 9: // vierkant woord x4
 				dx == 2 && dx == 2 && (multiplier += 2);
 				break;
