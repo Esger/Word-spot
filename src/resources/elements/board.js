@@ -12,7 +12,7 @@ export class Board {
 	constructor(eventAggregator, wordlistService) {
 		this._eventAggregator = eventAggregator;
 		this._wordlistService = wordlistService;
-		this.fillPool();
+		this._fillPool();
 		this._fillLetters();
 		this._addLetterClickedSubscription();
 	}
@@ -145,7 +145,7 @@ export class Board {
 		surroundingLetters.forEach(letter => letter.adjacent = true);
 	}
 
-	fillPool() {
+	_fillPool() {
 		const alphabet = [
 			{ "letter": "E", "frequency": 18.91 },
 			{ "letter": "N", "frequency": 10.03 },
