@@ -5,6 +5,8 @@
 				 --bgPos: ${backgroundPosition};">
 	<require from="./letter.css"></require>
 	<button click.delegate="toggleSelected() & debounce : 250"
+			touchstart.trigger="toggleSelected() & debounce : 100"
+			touchend.trigger="toggleSelected()"
 			mouseover.delegate="showSurroundingLetters(model)"
 			class="${model.selected ? 'selected' : ''}
 				${model.adjacent ? 'adjacent' : ''}

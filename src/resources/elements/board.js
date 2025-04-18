@@ -28,6 +28,19 @@ export class Board {
 		(oldSize !== this.size) && this._fillLetters();
 	}
 
+	onTouchMove(event) {
+		const x = event.touches[0].clientX;
+		const y = event.touches[0].clientY;
+		const target = document.elementFromPoint(x, y);
+		const targetId = target.parentElement.id.split('-')[1];
+		const letter = this.letters.find(letter => letter.id == targetId);
+		if (typeof letter === 'object' && letter.id !== this._previousId) {
+			console.log(letter);
+			this._eventAggregator.publish('letter-hovered', letter);
+			this._previousId = letter.id
+		}
+	}
+
 	_addLetter(letter) {
 		if (this.word.includes(letter)) {
 			this._setAnimation('down');
@@ -50,7 +63,7 @@ export class Board {
 
 	_addHoverSubscription() {
 		this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
-			if (!this._firstLetter)
+			if (!this._firstLetter || typeof letter !== 'object')
 				return;
 			this._addLetter(letter);
 			this._surroundingLetters(letter);
@@ -59,28 +72,29 @@ export class Board {
 	}
 
 	_addLetterClickedSubscription() {
-		this._letterClickedSubscription = this._eventAggregator.subscribe('letter-clicked', letter => {
+		this._letterClickedSubscription = this._eventAggregator.subscribeOnce('letter-clicked', letter => {
 
 			if (!this._firstLetter) {
-				this._addHoverSubscription()
+				this._addHoverSubscription();
 				this._firstLetter = letter;
 				letter.wordStart = true;
 				this.word = [];
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
+				this._addLetterClickedSubscription();
 			} else {
 				this._checkWord().then(resolve => {
-					if (resolve) {
-						this._win();
-						this._eventAggregator.publish('word-submitted', true);
-					} else {
-						this._wrong();
-						this._eventAggregator.publish('word-submitted', false);
-						this._eventAggregator.publish('current-word', '');
-					}
+					this._hoverSubscription?.dispose();
 					this._resetStates();
 					this._firstLetter = null;
-					this._hoverSubscription?.dispose();
+					this._eventAggregator.publish('word-submitted', resolve);
+					if (resolve) {
+						this._win();
+					} else {
+						this._wrong();
+						this._eventAggregator.publish('current-word', '');
+					}
+					this._addLetterClickedSubscription();
 				});
 			}
 		});
@@ -136,11 +150,11 @@ export class Board {
 			document.getElementById('feedback').style.setProperty('--translate', '0 30vw');
 	}
 
-	_surroundingLetters(centreLetter) {
+	_surroundingLetters(centerLetter) {
 		this.letters.forEach(letter => letter.adjacent = false);
 		const surroundingLetters = this.letters.filter(letter => {
-			const isSelf = letter.id === centreLetter.id;
-			return !letter.inWord && !isSelf && Math.abs(centreLetter.x - letter.x) <= 1 && Math.abs(centreLetter.y - letter.y) <= 1;
+			const isSelf = letter.id === centerLetter.id;
+			return !letter.inWord && !isSelf && Math.abs(centerLetter.x - letter.x) <= 1 && Math.abs(centerLetter.y - letter.y) <= 1;
 		});
 		surroundingLetters.forEach(letter => letter.adjacent = true);
 	}
