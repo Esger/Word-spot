@@ -98,8 +98,10 @@ export class Board {
 					if (resolve) {
 						this._win();
 					} else {
+						this.waitForAnimations = true;
 						this._wrong();
 						this._eventAggregator.publish('current-word', '');
+						setTimeout(_ => this.waitForAnimations = false, 500);
 					}
 					this._addLetterClickedSubscription();
 				});
@@ -123,7 +125,7 @@ export class Board {
 				letter.y = -1;
 				do {
 					letter.letter = this._getRandomLetter().letter;
-				} while (!this._hasVowels(this.letters));
+				} while (!this._hasVowels(this.letters)); // TODO && not onlyVowels()
 				setTimeout(_ => {
 					// top of column
 					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
@@ -147,7 +149,7 @@ export class Board {
 
 	_wrong() {
 		this._setAnimation('down');
-		const word = this.word.map(letter => letter.letter).join('');
+		// const word = this.word.map(letter => letter.letter).join('');
 	}
 
 	_setAnimation(direction = 'right') {

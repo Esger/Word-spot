@@ -6,4 +6,11 @@ board {
 	aspect-ratio: 1;
 	margin      : auto;
 	clip-path   : inset(-3vmin -1vmin -1vmin -1vmin);
+
+	&:has(.removed),
+	&.disabled {
+		button {
+			pointer-events: none;
+		}
+	}
 }
