@@ -31,7 +31,7 @@ html {
 		justify-content: space-between;
 		align-items    : center;
 		margin         : 3vmin auto;
-		width          : 85vmin;
+		width          : 80vmin;
 		font-weight    : bold;
 		font-family    : fantasy, cursive;
 		font-size      : 4vmin;
@@ -49,9 +49,8 @@ html {
 	}
 
 	h2 {
-		letter-spacing: 10px;
-		font-size     : 5vmin;
-		margin        : 0 auto;
+		font-size: 5vmin;
+		margin   : 0 auto;
 
 		.count,
 		.score {
@@ -68,6 +67,7 @@ html {
 			flex-direction : row-reverse;
 			justify-content: flex-end;
 			overflow       : hidden;
+			letter-spacing : 10px;
 
 			span {
 				text-transform: lowercase;
