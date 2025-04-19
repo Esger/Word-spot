@@ -1,6 +1,6 @@
 word-highlight {
-	--highlightColor  : goldenrod;
-	--beamColor       : darkkhaki;
+	--highlightColor  : hsl(55 73% 58% / 1);
+	--beamColor       : #FFC107;
 	--confetti1       : hsl(340, 57%, 84%);
 	--confettiDuration: .5s;
 	/* color          : palevioletred; */
@@ -8,7 +8,8 @@ word-highlight {
 	.beam {
 		position        : absolute;
 		background-image: linear-gradient(transparent, var(--beamColor), transparent);
-		opacity         : 0.9;
+		opacity         : 1;
+		filter          : blur(4px);
 		width           : var(--distance);
 		height          : calc(var(--distance) / 5);
 		translate       : calc(.8 * var(--distance) / 2) calc(.61 * var(--distance) / 2);
@@ -17,7 +18,8 @@ word-highlight {
 	}
 
 	&.highlight .beam {
-		box-shadow: 0 0 calc(var(--distance) / 3) var(--highlightColor), 0 0 calc(var(--distance) / 2) var(--highlightColor);
+		color     : var(--highlightColor);
+		box-shadow: inset 0 0 calc(var(--distance) / 3), 0 0 calc(var(--distance) / 3), 0 0 calc(var(--distance) / 7);
 	}
 }
 
