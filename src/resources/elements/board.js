@@ -1,15 +1,18 @@
 import { inject, bindable } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { WordlistService } from 'services/word-list-service';
-@inject(EventAggregator, WordlistService)
+@inject(Element, EventAggregator, WordlistService)
 export class Board {
 	@bindable wordCount = 0;
 	@bindable size = 3;
+	_maxSize = 9;
+	_minSize = 3;
 	letters = [];
 	_letterPool = [];
 	word = [];
 
-	constructor(eventAggregator, wordlistService) {
+	constructor(element, eventAggregator, wordlistService) {
+		this._element = element;
 		this._eventAggregator = eventAggregator;
 		this._wordlistService = wordlistService;
 		this._fillPool();
@@ -24,7 +27,11 @@ export class Board {
 
 	wordCountChanged() {
 		const oldSize = this.size;
-		this.size = Math.min(Math.floor(this.wordCount / 10) + 3, 10);
+		const wordsToNextLevel = 10;
+		const minLetterSize = 50;
+		const maxSize = Math.min(this._element.clientWidth / minLetterSize, this._maxSize);
+		const minSize = 3;
+		this.size = Math.floor(Math.min((this.wordCount / wordsToNextLevel) + minSize, maxSize));
 		(oldSize !== this.size) && this._fillLetters();
 	}
 

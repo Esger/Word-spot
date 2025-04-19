@@ -1,9 +1,10 @@
 letter {
-	position  : absolute;
-	left      : 0;
-	top       : 0;
-	translate : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
-	transition: translate .5s ease-in;
+	position   : absolute;
+	left       : 0;
+	top        : 0;
+	translate  : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
+	transition : translate .5s ease-in;
+	user-select: none;
 
 	&.entering {
 		transition: none;
@@ -24,7 +25,7 @@ letter {
 		background-position  : var(--bgPos);
 		background-blend-mode: multiply;
 		font-family          : courier;
-		font-size            : calc(80vmin / var(--size) / 2.5);
+		font-size            : max(1.7rem, calc(var(--boardSize) / var(--size) / 2.5));
 		color                : #444;
 		--d1                 : calc(var(--distance) / 100);
 		--d2                 : calc(-1 * var(--d1));
@@ -32,7 +33,6 @@ letter {
 		box-shadow           : 0 0 1vmin rgba(0, 0, 0, 0.2), var(--insetShadow);
 		text-shadow          : 2px 2px 3px rgba(255, 255, 255, 0.6), -2px -2px 3px rgba(0, 0, 0, 0.2);
 		padding-bottom       : .1lh;
-		user-select          : none;
 
 		&:hover {
 			box-shadow: 0 0 .5vmin rgba(0, 0, 0, 0.8), var(--insetShadow);
