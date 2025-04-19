@@ -1,9 +1,9 @@
 letter {
-	position  : absolute;
-	left      : 0;
-	top       : 0;
-	translate : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
-	transition: translate .5s ease-in;
+	position   : absolute;
+	left       : 0;
+	top        : 0;
+	translate  : calc(var(--x) * var(--distance)) calc(var(--y) * var(--distance));
+	transition : translate .5s ease-in;
 	user-select: none;
 
 	&.entering {
