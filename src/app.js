@@ -26,6 +26,10 @@ export class App {
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
 			this.count += success;
+			if (!success) {
+				this.score = 0;
+				// return
+			};
 			this._scoreTransferTimer = setInterval(_ => {
 				if (this.score > 0) {
 					this.total++;

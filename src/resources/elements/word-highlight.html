@@ -1,7 +1,9 @@
 <template class="${highlight ? 'highlight' : ''}">
 	<require from="./word-highlight.css"></require>
-	<div repeat.for="beam of beams"
-		 class="beam Xau-stagger au-animate animate-fadeIn animate-confetti"
-		 css.bind="beam">
-	</div>
+	<template repeat.for="letter of word">
+		<div if.bind="!$last"
+			 class="beam au-animate animate-fadeIn animate-confetti"
+			 css.bind="letter.beam">
+		</div>
+	</template>
 </template>

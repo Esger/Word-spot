@@ -42,7 +42,6 @@ export class Board {
 		const targetId = target.parentElement.id.split('-')[1];
 		const letter = this.letters.find(letter => letter.id == targetId);
 		if (typeof letter === 'object' && letter.id !== this._previousId) {
-			console.log(letter);
 			this._eventAggregator.publish('letter-hovered', letter);
 			this._previousId = letter.id
 		}
@@ -70,11 +69,13 @@ export class Board {
 
 	_addHoverSubscription() {
 		this._hoverSubscription = this._eventAggregator.subscribe('letter-hovered', letter => {
-			if (!this._firstLetter || typeof letter !== 'object')
-				return;
-			this._addLetter(letter);
-			this._surroundingLetters(letter);
-			this._eventAggregator.publish('current-word', this.word);
+			if (!this._firstLetter) return;
+			if (typeof letter !== 'object') return;
+			if (letter.adjacent || letter.inWord) {
+				this._addLetter(letter);
+				this._surroundingLetters(letter);
+				this._eventAggregator.publish('current-word', this.word);
+			}
 		});
 	}
 
@@ -100,8 +101,11 @@ export class Board {
 					} else {
 						this.waitForAnimations = true;
 						this._wrong();
-						this._eventAggregator.publish('current-word', '');
-						setTimeout(_ => this.waitForAnimations = false, 500);
+						this._eventAggregator.publish('current-word', []);
+						this.word = [];
+						setTimeout(_ => {
+							this.waitForAnimations = false;
+						}, 500);
 					}
 					this._addLetterClickedSubscription();
 				});
@@ -118,7 +122,7 @@ export class Board {
 	}
 
 	_removeWordFromBoard() {
-		this.word.forEach(letter => {
+		this.word.forEach((letter, index, word) => {
 			const $letter = $('#letter-' + letter.id);
 			$letter.one('transitionend', _ => {
 				letter.entering = true;
@@ -139,6 +143,9 @@ export class Board {
 			letter.letter = undefined;
 			const lettersAbove = this.letters.filter(l => l.y < letter.y && l.x === letter.x);
 			lettersAbove.forEach(l => l.y++);
+			if (word.indexOf(letter) === word.length - 1) {
+				this.word = [];
+			}
 		});
 	}
 
@@ -149,7 +156,6 @@ export class Board {
 
 	_wrong() {
 		this._setAnimation('down');
-		// const word = this.word.map(letter => letter.letter).join('');
 	}
 
 	_setAnimation(direction = 'right') {
