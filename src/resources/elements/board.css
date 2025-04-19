@@ -1,7 +1,8 @@
 board {
+	--boardSize : 85vmin;
 	position    : relative;
 	display     : block;
-	width       : 80vmin;
+	width       : var(--boardSize);
 	aspect-ratio: 1;
 	margin      : auto;
 	clip-path   : inset(-3vmin -1vmin -1vmin -1vmin);

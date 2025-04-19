@@ -1,6 +1,6 @@
 <template style="--size: ${size};
-				--distance: calc(80vmin / var(--size));"
-		  touchmove.trigger="onTouchMove($event) & debounce : 10">
+				--distance: calc(var(--boardSize) / var(--size));"
+		  touchmove.trigger="onTouchMove($event)">
 	<require from="./board.css"></require>
 	<require from="elements/letter"></require>
 	<require from="elements/word-highlight"></require>
