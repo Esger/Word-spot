@@ -47,7 +47,7 @@ export class App {
 	}
 
 	_getBonus(word) {
-		if (!Array.isArray(word)) return 0;
+		if (!Array.isArray(word) || !word.length) return 0;
 		let multiplier = 0;
 		const minX = word.reduce((min, letter) => Math.min(min, letter.x), word[0].x);
 		const maxX = word.reduce((max, letter) => Math.max(max, letter.x), word[0].x);
