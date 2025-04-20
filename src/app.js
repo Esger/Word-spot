@@ -55,22 +55,37 @@ export class App {
 		const maxY = word.reduce((max, letter) => Math.max(max, letter.y), word[0].y);
 		const dx = maxX - minX;
 		const dy = maxY - minY;
+		const bonuses = [];
 		if (word.length === this.size) {
 			// horizontaal woord x2
-			word.every(letter => letter.x === word[0].x) && multiplier++;
+			const isRow = word.every(letter => letter.x === word[0].x);
+			if (isRow) {
+				bonuses.push('verticaal');
+				multiplier++;
+			}
 			// verticaal woord x2
-			word.every(letter => letter.y === word[0].y) && multiplier++;
+			const isColumn = word.every(letter => letter.y === word[0].y);
+			if (isColumn) {
+				bonuses.push('horizontaal');
+				multiplier++;
+			}
 			// diagonaal woord x4
 			const last = this.size - 1;
 			const diagonals = [['0' + last, last + '0'], ['00', '' + last + last]]
 			const wordStart = '' + word[0].x + word[0].y;
 			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
-			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
+			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd))) {
+				bonuses.push('diagonaal');
 				multiplier += 2;
+			}
 		};
 		switch (word.length) {
 			case 4: // vierkant woord x2
-				dx == 1 && dy == 1 && multiplier++;
+				const is2x2 = dx + dy == 2;
+				if (!is2x2) break;
+
+				bonuses.push('vierkant2x2');
+				multiplier++;
 				break;
 			case 5: // plusje woord x2
 				const smallestX = Math.min(...word.map(letter => letter.x));
@@ -81,22 +96,40 @@ export class App {
 				const letterWithSmallestY = word.find(letter => letter.y === smallestY);
 				const lettersInColumnSmallestY = word.filter(letter => letter.x === letterWithSmallestY.x).length;
 
-
-				(lettersInRowSmallestX == 3 && lettersInColumnSmallestY == 3) && multiplier++;
+				if (lettersInRowSmallestX == 3 && lettersInColumnSmallestY == 3) {
+					bonuses.push('plusje');
+					multiplier++;
+				}
 				break;
 			case 6: // rechthoek 2x3 woord x4
-				dx + dy == 3 && (multiplier += 2)
+				const is2x3 = dx + dy == 3;
+				if (!is2x3) break;
+
+				bonuses.push('rechthoek2x3');
+				multiplier += 2;
 				break;
 			case 8: // rechthoek 2x4 woord x4
-				((dx == 3 && dy == 1) || (dx == 1 && dy == 3)) && (multiplier += 2);
-			case 9: // vierkant woord x4
-				dx == 2 && dx == 2 && (multiplier += 2);
+				const is2x4 = ((dx == 3 && dy == 1) || (dx == 1 && dy == 3))
+				if (!is2x4) break;
+
+				bonuses.push('rechthoek2x4');
+				multiplier += 2;
 				break;
-			case 16: // vierkant woord x4
-				dx == 3 && dx == 3 && (multiplier += 3);
+			case 9: // vierkant woord x4
+				const is3x3 = dx == 2 && dy == 2;
+				if (!is3x3) break;
+
+				bonuses.push('vierkant3x3');
+				multiplier += 2;
+				break;
+			case 16: // vierkant woord x8
+				const is4x4 = dx == 3 && dx == 3;
+				if (!is4x4) break;
+
+				bonuses.push('vierkant4x4');
+				multiplier += 3;
 				break;
 		}
-
 
 		return multiplier;
 	}
