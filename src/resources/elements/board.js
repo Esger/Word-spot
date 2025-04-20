@@ -129,7 +129,7 @@ export class Board {
 				letter.y = -1;
 				do {
 					letter.letter = this._getRandomLetter().letter;
-				} while (!this._hasVowels(this.letters)); // TODO && not onlyVowels()
+				} while (!this._hasVowels(this.letters) && !this._allVowels());
 				setTimeout(_ => {
 					// top of column
 					letter.y = this.size - 1 - this.letters.filter(l => !l.removed && l.x === letter.x).length;
