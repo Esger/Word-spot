@@ -1,0 +1,16 @@
+board {
+	--boardSize : 80vmin;
+	position    : relative;
+	display     : block;
+	width       : var(--boardSize);
+	aspect-ratio: 1;
+	margin      : auto;
+	clip-path   : inset(-3vmin -1vmin -1vmin -1vmin);
+
+	&:has(.removed),
+	&.disabled {
+		button {
+			pointer-events: none;
+		}
+	}
+}

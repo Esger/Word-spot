@@ -1,0 +1,17 @@
+<template id="letter-${model.id}"
+		  class="${model.entering ? 'entering' : ''}"
+		  style="--x: ${model.x}; 
+				 --y: ${model.y};
+				 --bgPos: ${backgroundPosition};">
+	<require from="./letter.css"></require>
+	<button click.delegate="toggleSelected() & debounce : 250"
+			touchstart.trigger="toggleSelected() & debounce : 100"
+			touchend.trigger="toggleSelected()"
+			mouseover.delegate="showSurroundingLetters(model)"
+			class="${model.selected ? 'selected' : ''}
+				${model.adjacent ? 'adjacent' : ''}
+				${model.inWord ? 'inWord' : ''}
+				${model.removed ? 'removed' : ''}">
+		${model.letter || model.oldLetter}
+	</button>
+</template>

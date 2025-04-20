@@ -1,0 +1,9 @@
+<template class="${highlight ? 'highlight' : ''}">
+	<require from="./word-highlight.css"></require>
+	<template repeat.for="letter of word">
+		<div if.bind="!$last"
+			 class="beam au-animate animate-fadeIn animate-confetti"
+			 css.bind="letter.beam">
+		</div>
+	</template>
+</template>

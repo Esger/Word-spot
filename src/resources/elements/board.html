@@ -1,0 +1,13 @@
+<template style="--size: ${size};
+				--distance: calc(var(--boardSize) / var(--size));"
+		  class="${waitForAnimations ? 'disabled' : ''}"
+		  touchmove.trigger="onTouchMove($event)">
+	<require from="./board.css"></require>
+	<require from="elements/letter"></require>
+	<require from="elements/word-highlight"></require>
+
+	<word-highlight word.bind="word"></word-highlight>
+	<letter repeat.for="letter of letters"
+			model.bind="letter"
+			value="${letter.letter}"></letter>
+</template>

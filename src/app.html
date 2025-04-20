@@ -1,0 +1,24 @@
+<template>
+	<require from="./reset.css"></require>
+	<require from="./app.css"></require>
+	<require from="elements/board"></require>
+
+	<h1><span>${title}</span>
+		<span class="highScore">high:${highScore}</span>
+		<span>${total || ''}</span>
+	</h1>
+
+	<board word-count.bind="count"
+		   size.two-way="size"></board>
+
+	<h2 id="feedback"
+		style="--translate: 25vw 0">
+		<span class="count">${count || ''}</span>
+		<span class="word au-stagger">
+			<span repeat.for="letter of word.split('').reverse()"
+				class="letter au-animate animate-flyOut">${letter}</span>
+		</span>
+		<span class="score">${score}</span>
+	</h2>
+
+</template>
