@@ -55,23 +55,6 @@ export class App {
 		const maxY = word.reduce((max, letter) => Math.max(max, letter.y), word[0].y);
 		const dx = maxX - minX;
 		const dy = maxY - minY;
-		switch (word.length) {
-			case 4: // vierkant woord x2
-				dx == 1 && dy == 1 && multiplier++;
-				break;
-			case 6: // rechthoek 2x3 woord x4
-				dx + dy == 3 && (multiplier += 2);
-				break;
-			case 8: // rechthoek 2x4 woord x4
-				((dx == 3 && dy == 1) || (dx == 1 && dy == 3)) && (multiplier += 2);
-			case 9: // vierkant woord x4
-				dx == 2 && dx == 2 && (multiplier += 2);
-				break;
-			case 16: // vierkant woord x4
-				dx == 3 && dx == 3 && (multiplier += 3);
-				break;
-			default: break;
-		}
 		if (word.length === this.size) {
 			// horizontaal woord x2
 			word.every(letter => letter.x === word[0].x) && multiplier++;
@@ -84,7 +67,36 @@ export class App {
 			const wordEnd = '' + word[word.length - 1].x + word[word.length - 1].y;
 			if (diagonals.some(diagonal => diagonal.includes(wordStart) && diagonal.includes(wordEnd)))
 				multiplier += 2;
+		};
+		switch (word.length) {
+			case 4: // vierkant woord x2
+				dx == 1 && dy == 1 && multiplier++;
+				break;
+			case 5: // plusje woord x2
+				const smallestX = Math.min(...word.map(letter => letter.x));
+				const letterWithSmallestX = word.find(letter => letter.x === smallestX);
+				const lettersInRowSmallestX = word.filter(letter => letter.y === letterWithSmallestX.y).length;
+
+				const smallestY = Math.min(...word.map(letter => letter.y));
+				const letterWithSmallestY = word.find(letter => letter.y === smallestY);
+				const lettersInColumnSmallestY = word.filter(letter => letter.x === letterWithSmallestY.x).length;
+
+
+				(lettersInRowSmallestX == 3 && lettersInColumnSmallestY == 3) && multiplier++;
+				break;
+			case 6: // rechthoek 2x3 woord x4
+				dx + dy == 3 && (multiplier += 2)
+				break;
+			case 8: // rechthoek 2x4 woord x4
+				((dx == 3 && dy == 1) || (dx == 1 && dy == 3)) && (multiplier += 2);
+			case 9: // vierkant woord x4
+				dx == 2 && dx == 2 && (multiplier += 2);
+				break;
+			case 16: // vierkant woord x4
+				dx == 3 && dx == 3 && (multiplier += 3);
+				break;
 		}
+
 
 		return multiplier;
 	}
