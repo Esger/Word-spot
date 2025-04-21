@@ -19,12 +19,15 @@ export class App {
 	attached() {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
+			this.score = 0;
+			if (this._isAnimating) return;
 			this.word = this._wordlistService.getText(word);
 			const multiplier = this._getBonus(word);
 			this.score = Math.pow(2, (word.length + multiplier)) - 1;
 			this._eventAggregator.publish('multiplier', multiplier);
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
+			this._isAnimating = true;
 			this.count += success;
 			if (!success) {
 				this.score = 0;
@@ -36,6 +39,7 @@ export class App {
 					this.score--;
 				} else {
 					clearInterval(this._scoreTransferTimer);
+					this._isAnimating = false;
 					this.word = '';
 					if (this.total > this.highScore) {
 						this.highScore = this.total;
@@ -130,7 +134,7 @@ export class App {
 				multiplier += 3;
 				break;
 		}
-
+		console.log('bonuses', bonuses);
 		return multiplier;
 	}
 
