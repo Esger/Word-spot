@@ -90,6 +90,7 @@ export class Board {
 				this._addLetter(letter);
 				this._surroundingLetters(letter);
 				this._addLetterClickedSubscription();
+				this._eventAggregator.publish('current-word', this.word);
 			} else {
 				this._checkWord().then(resolve => {
 					this._hoverSubscription?.dispose();
