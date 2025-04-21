@@ -8,11 +8,9 @@ export class WordHighlight {
 	constructor(eventAggregator) {
 		this._eventAggregator = eventAggregator;
 		this._wordChangedSubscription = this._eventAggregator.subscribe('current-word', word => {
-			console.log(word);
 			if (word.length)
 				this._updateBeams()
 			else this._resetBeams();
-			console.log(word);
 		});
 		this._multiplierSubscription = this._eventAggregator.subscribe('multiplier', multiplier => this.highlight = multiplier > 0);
 		this._winSubscription = this._eventAggregator.subscribe('word-submitted', win => this._resetBeams(win));

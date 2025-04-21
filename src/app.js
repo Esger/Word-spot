@@ -27,19 +27,17 @@ export class App {
 			this._eventAggregator.publish('multiplier', multiplier);
 		});
 		this._wordSubmittedSubscription = this._eventAggregator.subscribe('word-submitted', success => {
+			if (this._isAnimating) return;
 			this._isAnimating = true;
 			this.count += success;
-			if (!success) {
-				this.score = 0;
-				// return
-			};
+			if (!success) this.score = 0;
 			this._scoreTransferTimer = setInterval(_ => {
 				if (this.score > 0) {
 					this.total++;
 					this.score--;
 				} else {
 					clearInterval(this._scoreTransferTimer);
-					this._isAnimating = false;
+					setTimeout(_ => this._isAnimating = false, this.word.length * 200);
 					this.word = '';
 					if (this.total > this.highScore) {
 						this.highScore = this.total;
@@ -51,8 +49,8 @@ export class App {
 	}
 
 	_getBonus(word) {
-		if (!Array.isArray(word) || !word.length) return 0;
 		let multiplier = 0;
+		if (!Array.isArray(word) || word.length < 2) return multiplier;
 		const minX = word.reduce((min, letter) => Math.min(min, letter.x), word[0].x);
 		const maxX = word.reduce((max, letter) => Math.max(max, letter.x), word[0].x);
 		const minY = word.reduce((min, letter) => Math.min(min, letter.y), word[0].y);
@@ -134,7 +132,6 @@ export class App {
 				multiplier += 3;
 				break;
 		}
-		console.log('bonuses', bonuses);
 		return multiplier;
 	}
 
