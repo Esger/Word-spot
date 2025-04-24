@@ -4,10 +4,16 @@
 	<require from="elements/board"></require>
 	<require from="elements/menu"></require>
 
-	<menu languages.bind="languages"
-		  selectedLanguage.two-way="selectedLanguage"></menu>
+	<menu>
+		<ul>
+			<li repeat.for="language of languages"
+				class="${language.name === this.selectedLanguage ? 'selected' : ''}">
+				<a click.trigger="changeLanguage(language)">${language.name}</a>
+			</li>
+		</ul>
+	</menu>
 
-	<h1><span>${title}</span>
+	<h1><span>${translations[selectedLanguageCode].title}</span>
 		<span class="highScore">high:${highScore}</span>
 		<span>${total || ''}</span>
 	</h1>

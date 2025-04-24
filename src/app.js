@@ -13,7 +13,7 @@ export class App {
 		{ code: 'en-UK', name: 'English' },
 		{ code: 'nl-NL', name: 'Nederlands' }
 	]
-	_translations = {
+	translations = {
 		'en-UK': {
 			'title': 'Word Spot'
 		},
@@ -27,9 +27,8 @@ export class App {
 		this._settingsService = settingsService;
 		this._wordlistService = wordlistService;
 		const lang = navigator.language || navigator.userLanguage;
-		this.language = this.languages.find(l => l.code.substring(0, 2) === lang.substring(0, 2)) || this.languages[0];
-		this.title = this._translations[this.language.code].title;
-		$('html').attr('lang', this.language.code);
+		this.selectedLanguageCode = this.languages.find(l => l.code.substring(0, 2) === lang.substring(0, 2))?.code || this.languages[0].code;
+		$('html').attr('lang', this.selectedLanguageCode.code);
 	}
 
 	attached() {
@@ -155,5 +154,10 @@ export class App {
 		this._wordSubscription.dispose();
 		this._wordSubmittedSubscription
 		clearInterval(this._scoreTransferTimer);
+	}
+
+	changeLanguage(language) {
+		this.selectedLanguageCode = language.code;
+		$('nav')[0].hidePopover();
 	}
 }

@@ -5,11 +5,6 @@
 	<nav id="menu"
 		 popover>
 		<button popovertarget="menu" class="menuToggle">&times;</button>
-		<ul>
-			<li repeat.for="language of languages"
-				class="${language === this.selectedLanguage ? 'selected' : ''}">
-				<a click.trigger="changeLanguage(language)">${language.name}</a>
-			</li>
-		</ul>
+		<slot></slot>
 	</nav>
 </template>
