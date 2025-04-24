@@ -6,16 +6,32 @@ import $ from 'jquery';
 
 @inject(Element, EventAggregator, MySettingsService, WordlistService)
 export class App {
-	title = 'Woord Spot';
 	size = 3;
 	count = 0;
 	total = 0;
+	languages = [
+		{ code: 'en-UK', name: 'English' },
+		{ code: 'nl-NL', name: 'Nederlands' }
+	]
+	_translations = {
+		'en-UK': {
+			'title': 'Word Spot'
+		},
+		'nl-NL': {
+			'title': 'Woord Spot',
+		}
+	}
 	constructor(element, eventAggregator, settingsService, wordlistService) {
 		this._element = element;
 		this._eventAggregator = eventAggregator;
 		this._settingsService = settingsService;
 		this._wordlistService = wordlistService;
+		const lang = navigator.language || navigator.userLanguage;
+		this.language = this.languages.find(l => l.code.substring(0, 2) === lang.substring(0, 2)) || this.languages[0];
+		this.title = this._translations[this.language.code].title;
+		$('html').attr('lang', this.language.code);
 	}
+
 	attached() {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {

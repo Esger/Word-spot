@@ -1,0 +1,49 @@
+menu {
+	position: absolute;
+	left    : 0;
+	top     : 0;
+}
+
+nav {
+	position        : relative;
+	z-index         : 1;
+	padding         : 6vmin 3vmin 2vmin 2.3vmin;
+	border-radius   : 0 0 1rem 0;
+	transition      : all .5s ease-out allow-discrete;
+	opacity         : 0;
+	background-color: #ffffffee;
+
+	&:popover-open {
+		transform: translate(0, 0);
+		opacity  : 1;
+	}
+
+	ul {
+		list-style-type: none;
+		font-size      : min(1.2rem, 4vmin);
+		line-height    : 2;
+
+		a {
+			cursor: pointer;
+		}
+	}
+}
+
+@starting-style {
+	nav {
+		display  : block;
+		transform: translate(-100%, -100%);
+		opacity  : 0;
+	}
+}
+
+.menuToggle {
+	position   : absolute;
+	left       : 0;
+	top        : 0;
+	padding    : 2vmin;
+	cursor     : pointer;
+	border     : none;
+	background : none;
+	line-height: .3;
+}

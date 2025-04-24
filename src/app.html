@@ -2,6 +2,10 @@
 	<require from="./reset.css"></require>
 	<require from="./app.css"></require>
 	<require from="elements/board"></require>
+	<require from="elements/menu"></require>
+
+	<menu languages.bind="languages"
+		  selectedLanguage.two-way="selectedLanguage"></menu>
 
 	<h1><span>${title}</span>
 		<span class="highScore">high:${highScore}</span>
