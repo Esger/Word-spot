@@ -2,14 +2,25 @@
 	<require from="./reset.css"></require>
 	<require from="./app.css"></require>
 	<require from="elements/board"></require>
+	<require from="elements/menu"></require>
 
-	<h1><span>${title}</span>
+	<menu>
+		<ul>
+			<li repeat.for="language of languages"
+				class="${language.code === selectedLanguage.code ? 'selected' : ''}">
+				<a click.trigger="changeLanguage(language)">${language.name}</a>
+			</li>
+		</ul>
+	</menu>
+
+	<h1><span>${translations[selectedLanguageCode].title}</span>
 		<span class="highScore">high:${highScore}</span>
 		<span>${total || ''}</span>
 	</h1>
 
 	<board word-count.bind="count"
-		   size.two-way="size"></board>
+		   size.two-way="size"
+		   language.bind="selectedLanguage"></board>
 
 	<h2 id="feedback"
 		style="--translate: 25vw 0">

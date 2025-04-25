@@ -1,6 +1,6 @@
 export class MySettingsService {
 	_settingsName = 'word-spot';
-	_version = 'v0.1'; // increase when settings object changes
+	_version = 'v0.2'; // increase when settings object changes
 	_settings = {};
 
 	constructor() {
