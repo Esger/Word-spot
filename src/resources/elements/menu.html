@@ -1,0 +1,12 @@
+<template>
+	<require from="./menu.css"></require>
+
+	<button popovertarget="menu"
+			class="menuToggle">=</button>
+	<nav id="menu"
+		 popover>
+		<button popovertarget="menu"
+				class="menuToggle">&times;</button>
+		<slot></slot>
+	</nav>
+</template>

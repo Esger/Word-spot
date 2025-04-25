@@ -6,16 +6,33 @@ import $ from 'jquery';
 
 @inject(Element, EventAggregator, MySettingsService, WordlistService)
 export class App {
-	title = 'Woord Spot';
 	size = 3;
 	count = 0;
 	total = 0;
+	languages = [
+		{ code: 'en-UK', name: 'English' },
+		{ code: 'nl-NL', name: 'Nederlands' }
+	]
+	translations = {
+		'en-UK': {
+			'title': 'Word Spot'
+		},
+		'nl-NL': {
+			'title': 'Woord Spot',
+		}
+	}
 	constructor(element, eventAggregator, settingsService, wordlistService) {
 		this._element = element;
 		this._eventAggregator = eventAggregator;
 		this._settingsService = settingsService;
 		this._wordlistService = wordlistService;
+		const lang = navigator.language || navigator.userLanguage;
+		this.selectedLanguage = this.languages.find(l => l.code === lang) || this.languages[0];
+		this.selectedLanguageCode = this.selectedLanguage.code;
+		$('html').attr('lang', this.selectedLanguageCode);
+		this._wordlistService.setLanguage(this.selectedLanguage);
 	}
+
 	attached() {
 		this.highScore = this._settingsService.getSettings('high-score') || 0;
 		this._wordSubscription = this._eventAggregator.subscribe('current-word', word => {
@@ -139,5 +156,12 @@ export class App {
 		this._wordSubscription.dispose();
 		this._wordSubmittedSubscription
 		clearInterval(this._scoreTransferTimer);
+	}
+
+	changeLanguage(language) {
+		this.selectedLanguage = language;
+		this.selectedLanguageCode = language.code;
+		this._wordlistService.setLanguage(language);
+		$('nav')[0].hidePopover();
 	}
 }
