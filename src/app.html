@@ -7,7 +7,7 @@
 	<menu>
 		<ul>
 			<li repeat.for="language of languages"
-				class="${language.name === this.selectedLanguage ? 'selected' : ''}">
+				class="${language.code === selectedLanguage.code ? 'selected' : ''}">
 				<a click.trigger="changeLanguage(language)">${language.name}</a>
 			</li>
 		</ul>
@@ -19,7 +19,8 @@
 	</h1>
 
 	<board word-count.bind="count"
-		   size.two-way="size"></board>
+		   size.two-way="size"
+		   language.bind="selectedLanguage"></board>
 
 	<h2 id="feedback"
 		style="--translate: 25vw 0">
