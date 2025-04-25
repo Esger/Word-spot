@@ -1,20 +1,32 @@
 export class WordlistService {
 
 	constructor() {
-		this.init();
+		// this.init();
 	}
 
-	async init() {
-		this.wordlist = await this.loadWordlists();
+	async init(language) {
+		this.wordlist = await this.loadWordlists(language);
 	}
 
-	async loadWordlists() {
-		const [wordlist1, wordlist2] = await Promise.all([
-			this.loadWordlist('assets/wordlists/OpenTaal-210G-flexievormen.txt'),
-			this.loadWordlist('assets/wordlists/OpenTaal-210G-basis-gekeurd.txt')
-		]);
-
-		const unionSet = wordlist1.union(wordlist2);
+	async loadWordlists(language) {
+		const fileNames = {
+			'nl-NL': [
+				'assets/wordlists/OpenTaal-210G-flexievormen.txt',
+				'assets/wordlists/OpenTaal-210G-basis-gekeurd.txt'
+			],
+			'en-UK': [
+				'assets/wordlists/English-Words-Alpha.txt',
+			]
+		}
+		// if (!fileNames[language.code]) return;
+		let unionSet;
+		if (fileNames[language.code].length > 1) {
+			const [wordlist1, wordlist2] = await Promise.all(fileNames[language.code].map(file => this.loadWordlist(file)));
+			unionSet = wordlist1.union(wordlist2);
+		} else {
+			const wordlist = await this.loadWordlist(fileNames[language.code]);
+			unionSet = new Set(wordlist);
+		}
 		return unionSet;
 	}
 
@@ -26,6 +38,10 @@ export class WordlistService {
 
 	_normalizeAccents(word) {
 		return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+	}
+
+	setLanguage(language) {
+		this.init(language);
 	}
 
 	getText(word) {

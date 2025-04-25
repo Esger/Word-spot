@@ -27,8 +27,10 @@ export class App {
 		this._settingsService = settingsService;
 		this._wordlistService = wordlistService;
 		const lang = navigator.language || navigator.userLanguage;
-		this.selectedLanguageCode = this.languages.find(l => l.code.substring(0, 2) === lang.substring(0, 2))?.code || this.languages[0].code;
+		const selectedLanguage = this.languages.find(l => l.code === lang) || this.languages[0];
+		this.selectedLanguageCode = selectedLanguage.code;
 		$('html').attr('lang', this.selectedLanguageCode.code);
+		this._wordlistService.setLanguage(selectedLanguage);
 	}
 
 	attached() {
@@ -158,6 +160,7 @@ export class App {
 
 	changeLanguage(language) {
 		this.selectedLanguageCode = language.code;
+		this._wordlistService.setLanguage(language);
 		$('nav')[0].hidePopover();
 	}
 }
