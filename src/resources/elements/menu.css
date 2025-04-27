@@ -1,10 +1,40 @@
 menu {
 	position: absolute;
-	left    : 0;
 	top     : 0;
+
+	&.menu {
+		left: 0;
+		top : 0;
+	}
+
+	&.help {
+		right: 0;
+
+		h1 {
+			width     : max-content;
+			text-align: right;
+			margin    : 0;
+		}
+
+		h1,
+		p:not(.credits) {
+			display  : inline-block;
+			max-width: 40ch;
+		}
+
+		p.credits {
+			text-align: right;
+			font-size : 80%;
+
+			a {
+				color: black;
+			}
+		}
+
+	}
 }
 
-nav {
+[popover] {
 	position        : relative;
 	z-index         : 1;
 	padding         : 6vmin 3vmin 2vmin 2.3vmin;
@@ -12,6 +42,17 @@ nav {
 	transition      : all .5s ease-out allow-discrete;
 	opacity         : 0;
 	background-color: #ffffffee;
+	box-shadow      : 0 0 1vmin rgba(0, 0, 0, 0.2);
+
+	.help & {
+		position      : absolute;
+		right         : 0;
+		left          : auto;
+		display       : flex;
+		flex-direction: column;
+		padding       : 3vmin 3vmin 2vmin 2.3vmin;
+		border-radius : 0 0 0 1rem;
+	}
 
 	&:popover-open {
 		transform: translate(0, 0);
@@ -34,7 +75,7 @@ nav {
 }
 
 @starting-style {
-	nav {
+	[popover] {
 		display  : block;
 		transform: translate(-100%, -100%);
 		opacity  : 0;
@@ -42,12 +83,20 @@ nav {
 }
 
 .menuToggle {
-	position   : absolute;
-	left       : 0;
-	top        : 0;
 	padding    : 2vmin;
 	cursor     : pointer;
 	border     : none;
 	background : none;
 	line-height: .3;
+	color      : black;
+	position   : fixed;
+	top        : 0;
+
+	&.menuToggle--menu {
+		left: 0;
+	}
+
+	&.menuToggle--help {
+		right: 0;
+	}
 }

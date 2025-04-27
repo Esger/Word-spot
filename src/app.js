@@ -15,10 +15,16 @@ export class App {
 	]
 	translations = {
 		'en-UK': {
-			'title': 'Word Spot'
+			'title': 'Word Spot',
+			'helpTitle': 'How to play',
+			'helpTextMouse': 'Click on a letter to start a word. Move around and click to finish and submit the word.',
+			'helpTextTouch': 'Touch a letter to start your word. Move your finger to form the word. Lift to submit the word.'
 		},
 		'nl-NL': {
 			'title': 'Woord Spot',
+			'helpTitle': 'Hoe werkt het',
+			'helpTextMouse': 'Klik op een letter om een woord te beginnen. Muis over andere letters en klik om het woord te maken.',
+			'helpTextTouch': 'Raak de beginletter van je woord aan, ga rond met je vinger om het woord te vormen en laat los om het woord te voltooien.'
 		}
 	}
 	constructor(element, eventAggregator, settingsService, wordlistService) {
@@ -31,6 +37,7 @@ export class App {
 		this.selectedLanguageCode = this.selectedLanguage.code;
 		$('html').attr('lang', this.selectedLanguageCode);
 		this._wordlistService.setLanguage(this.selectedLanguage);
+		this._determineTouchDevice();
 	}
 
 	attached() {
@@ -157,11 +164,21 @@ export class App {
 		this._wordSubmittedSubscription
 		clearInterval(this._scoreTransferTimer);
 	}
-
 	changeLanguage(language) {
 		this.selectedLanguage = language;
 		this.selectedLanguageCode = language.code;
 		this._wordlistService.setLanguage(language);
-		$('nav')[0].hidePopover();
+		$('[popover]')[0].hidePopover();
 	}
+	_determineTouchDevice() {
+		this._setIsTouchDevice('ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0);
+		$('body').one('touchstart', _ => this._setIsTouchDevice(true))
+	}
+
+	_setIsTouchDevice(isTouch) {
+		this.isTouchDevice = isTouch;
+		$('html').toggleClass('touch-device', isTouch);
+		sessionStorage.setItem('touch-device', isTouch);
+	}
+
 }
