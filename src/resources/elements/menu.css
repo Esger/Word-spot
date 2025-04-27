@@ -21,6 +21,15 @@ menu {
 			display  : inline-block;
 			max-width: 40ch;
 		}
+
+		p.credits {
+			text-align: right;
+
+			a {
+				color: black;
+			}
+		}
+
 	}
 }
 
