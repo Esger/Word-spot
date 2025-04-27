@@ -4,13 +4,22 @@
 	<require from="elements/board"></require>
 	<require from="elements/menu"></require>
 
-	<menu>
+	<menu target-popover="menu"
+		  menu-icon="&#9776;">
 		<ul>
 			<li repeat.for="language of languages"
 				class="${language.code === selectedLanguage.code ? 'selected' : ''}">
 				<a click.trigger="changeLanguage(language)">${language.name}</a>
 			</li>
 		</ul>
+	</menu>
+
+	<menu target-popover="help"
+		  menu-icon="?"
+		  class="help">
+		<h1>${translations[selectedLanguageCode].helpTitle}</h1>
+		<p>${isTouchDevice ? translations[selectedLanguageCode].helpTextTouch : translations[selectedLanguageCode].helpTextMouse}</p>
+		<p class="credits">&copy; <a href="https://ashware.nl">ashWare</a></p>
 	</menu>
 
 	<h1><span>${translations[selectedLanguageCode].title}</span>

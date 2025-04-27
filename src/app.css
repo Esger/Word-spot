@@ -33,7 +33,7 @@ html {
 		margin         : 3vmin auto;
 		width          : 80vmin;
 		font-weight    : bold;
-		font-family    : fantasy, cursive;
+		font-family    : papyrus, fantasy, cursive;
 		font-size      : 4vmin;
 
 		>span:last-child {
