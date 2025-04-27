@@ -17,13 +17,14 @@ menu {
 		}
 
 		h1,
-		p {
+		p:not(.credits) {
 			display  : inline-block;
 			max-width: 40ch;
 		}
 
 		p.credits {
 			text-align: right;
+			font-size : 80%;
 
 			a {
 				color: black;
@@ -41,6 +42,7 @@ menu {
 	transition      : all .5s ease-out allow-discrete;
 	opacity         : 0;
 	background-color: #ffffffee;
+	box-shadow      : 0 0 1vmin rgba(0, 0, 0, 0.2);
 
 	.help & {
 		position      : absolute;
