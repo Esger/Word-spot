@@ -85,7 +85,7 @@ menu {
 }
 
 .menuToggle {
-	padding    : 2vmin;
+	padding    : 3vmin 2vmin;
 	cursor     : pointer;
 	border     : none;
 	background : none;
