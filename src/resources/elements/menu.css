@@ -4,38 +4,14 @@ menu {
 
 	&.menu {
 		left: 0;
-		top : 0;
 	}
 
 	&.help {
 		right: 0;
-
-		h1 {
-			width     : max-content;
-			text-align: right;
-			margin    : 0;
-		}
-
-		h1,
-		p:not(.credits) {
-			display  : inline-block;
-			max-width: 40ch;
-		}
-
-		p.credits {
-			text-align: right;
-			font-size : 80%;
-
-			a {
-				color: black;
-			}
-		}
-
 	}
 }
 
 [popover] {
-	position        : relative;
 	z-index         : 1;
 	padding         : 6vmin 3vmin 2vmin 2.3vmin;
 	border-radius   : 0 0 1rem 0;
@@ -46,17 +22,33 @@ menu {
 	pointer-events  : none;
 
 	.help & {
-		position      : absolute;
-		right         : 0;
-		left          : auto;
-		display       : flex;
-		flex-direction: column;
-		padding       : 3vmin 3vmin 2vmin 2.3vmin;
-		border-radius : 0 0 0 1rem;
+		position     : absolute;
+		right        : 0;
+		left         : auto;
+		width        : min(39ch, 75vw);
+		padding      : 3vmin 3vmin 2vmin 2.3vmin;
+		border-radius: 0 0 0 1rem;
+
+		&:popover-open {
+			display       : flex;
+			flex-direction: column;
+		}
+
+		h1 {
+			margin: 0;
+		}
+
+		p.credits {
+			text-align: right;
+			font-size : 80%;
+
+			a {
+				color: black;
+			}
+		}
 	}
 
 	&:popover-open {
-		transform     : translate(0, 0);
 		opacity       : 1;
 		pointer-events: all;
 	}
@@ -78,9 +70,15 @@ menu {
 
 @starting-style {
 	[popover] {
-		display  : block;
-		transform: translate(-100%, -100%);
-		opacity  : 0;
+		display         : flex;
+		rotate          : -90deg;
+		transform-origin: left top;
+		opacity         : 0;
+
+		.help & {
+			rotate          : 90deg;
+			transform-origin: right top;
+		}
 	}
 }
 
