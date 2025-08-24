@@ -39,12 +39,8 @@ letter {
 		}
 
 		&.adjacent {
-			background-color     : #d2d2d2;
+			background-color     : hsl(120 73% 85% / 1);
 			background-blend-mode: luminosity;
-
-			&:hover {
-				background-color: hsl(120 73% 85% / 1);
-			}
 		}
 
 		&.inWord {
