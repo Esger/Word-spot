@@ -6,7 +6,7 @@ export class Board {
 	@bindable wordCount = 0;
 	@bindable size = 3;
 	@bindable language;
-	_maxSize = 9;
+	_maxSize = 7;
 	_minSize = 3;
 	letters = [];
 	_letterPool = [];
